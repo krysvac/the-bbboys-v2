@@ -1,2 +1,26 @@
-<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+<div class="row">
+    <div class="col-12">
+        <app-navbar></app-navbar>
+    </div>
+
+    <div class="col-12">
+        <div class="row">
+            <div class="col-2 d-none d-lg-flex minecraft">
+            </div>
+
+            <div class="col-lg-8 col-md-12">
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="col-12">
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2 d-none d-lg-flex minecraft">
+            </div>
+        </div>
+    </div>
+</div>
+

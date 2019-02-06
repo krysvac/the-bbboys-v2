@@ -1,3 +1,5 @@
 export const environment = {
-    production: true
+    production: true,
+    title: "The BBBoys mat-info | ",
+    navbarTitle: "The BBBoys"
 };
