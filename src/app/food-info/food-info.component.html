@@ -1,0 +1,93 @@
+<h1 style="margin-top: 30px;">Maten för veckan, Vecka {{ getWeek() }}</h1>
+
+<div class="d-flex justify-content-center" *ngIf="!bistroJDone || !villaDone">
+    <div class="spinner-border text-primary loading-food">
+    </div>
+</div>
+<div class="d-flex justify-content-center loading-food-info" *ngIf="!bistroJDone || !villaDone">
+    Laddar mat-information...
+</div>
+
+<ngb-tabset *ngIf="bistroJDone && villaDone">
+    <ngb-tab title="Villa Oscar">
+        <ng-template ngbTabContent>
+            <table class="table table-hover">
+                <thead>
+                <tr class="justify-content-start">
+                    <th scope="col" style="width: 110px;">Dag</th>
+                    <th scope="col">Maträtter</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr [ngClass]="{'activeDay': foodItemIsForToday(item.key)}"
+                    *ngFor="let item of villa | keyvalue ; index as index">
+                    <td>
+                        <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#villa' + item.key)"
+                           [attr.aria-expanded]="!isCollapsed" [attr.aria-controls]="'#villa' + item.key" role="button">
+                            {{translateDay(item.key)}}
+                        </a>
+                    </td>
+                    <td>
+                        <div id="{{'#villa' + item.key}}" [ngbCollapse]="!shouldBeOpen('#villa', item.key)">
+                            <div>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let food of item.value">
+                                        <td>
+                                            {{food}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Bistro J">
+        <ng-template ngbTabContent>
+            <table class="table table-hover">
+                <thead>
+                <tr class="justify-content-start">
+                    <th scope="col" style="width: 110px;">Dag</th>
+                    <th scope="col">Maträtter</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr [ngClass]="{'activeDay': foodItemIsForToday(item.key)}"
+                    *ngFor="let item of bistroJ | keyvalue ; index as index">
+                    <td>
+                        <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#bistroJ' + item.key)"
+                           [attr.aria-expanded]="!isCollapsed" [attr.aria-controls]="'#bistroJ' + item.key"
+                           role="button">
+                            {{translateDay(item.key)}}
+                        </a>
+                    </td>
+                    <td>
+                        <div id="{{'#bistroJ' + item.key}}" [ngbCollapse]="!shouldBeOpen('#bistroJ', item.key)">
+                            <div>
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let food of item.value">
+                                        <td>
+                                            {{food}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>

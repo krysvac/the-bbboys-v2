@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {Title} from '@angular/platform-browser';
+import {environment} from '../../environments/environment';
 
 @Component({
     selector: 'app-overview',
@@ -6,11 +8,10 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-
-    constructor() {
+    constructor(private titleService: Title) {
+        this.titleService.setTitle('Hem' + environment.title);
     }
 
     ngOnInit() {
     }
-
 }
