@@ -1,43 +1,6 @@
 <app-food-info></app-food-info>
-<app-poll></app-poll>
-<app-poll-results></app-poll-results>
-
-<!--
 
 <div class="col-6 offset-3 text-center">
-
-<?php
-    $answers = getAnswersForPollByPollId($poll->id);
-    $amountOfAnswers = $answers === false ? 0 : count($answers);
-    echo "<h3>" . $amountOfAnswers . " Svar</h3>";
-    foreach ($choices as $choice) {
-    $amount = 0;
-    if ($amountOfAnswers > 0) {
-    foreach ($answers as $answer) {
-    if ($choice->id == $answer->choice_id) {
-    $amount++;
-    }
-    }
-    }
-
-    if ($amountOfAnswers == 0) {
-    echo <<<EOD
-        <div class="text-left">$choice->value (0%)</div>
-        <div class="progress answerprogress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
-        </div><br>
-EOD;
-    } else {
-    $percent = $amount > 0 ? $amount/$amountOfAnswers : "0%";
-    $percent_friendly = $amount > 0 ? number_format($percent * 100, 2) . '%' : "0%";
-    echo <<<EOD
-        <div class="text-left">$choice->value ($percent_friendly)</div>
-        <div class="progress answerprogress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="$amount" aria-valuemin="0" aria-valuemax="$amountOfAnswers" style="width:$percent_friendly;"></div>
-        </div><br>
-EOD;
-    }
-    }
-    ?>
+    <app-poll></app-poll>
+    <app-poll-results></app-poll-results>
 </div>
--->

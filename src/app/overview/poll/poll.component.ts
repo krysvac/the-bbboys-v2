@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
-import {PollWithChoices} from '../../types';
-import {ApiService, UserService} from '../../_services';
+import {Choice, PollWithChoices} from '../../types';
+import {ApiService, StorageService, UserService} from '../../_services';
 
 
 @Component({
@@ -19,13 +19,16 @@ export class PollComponent implements OnInit {
     public votingIsAllowed: boolean = true;
     public choiceVotedFor: number = -1;
 
-    constructor(public user: UserService, private api: ApiService) {
+    private static pollLoadedEvent: EventEmitter<Choice[]> = new EventEmitter<Choice[]>();
+
+    constructor(public user: UserService, private api: ApiService, private storage: StorageService) {
     }
 
     ngOnInit() {
         this.api.getPoll().subscribe(
             data => {
                 this.pollWithChoices = data;
+                PollComponent.pollLoadedEvent.emit(data.choices);
                 this.pollLoaded = true;
             }
         );
@@ -56,15 +59,15 @@ export class PollComponent implements OnInit {
         });
     }
 
-    public getDay() {
+    public getDay(): string {
         return PollComponent.translateDay(moment().isoWeekday().toString());
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
 
     }
 
-    public static translateDay(day: string) {
+    public static translateDay(day: string): string {
         switch (day) {
             case '1':
                 return 'Måndag';
@@ -81,5 +84,9 @@ export class PollComponent implements OnInit {
             case '7':
                 return 'Söndag';
         }
+    }
+
+    public static getPollLoadedEventEmitter(): EventEmitter<Choice[]> {
+        return this.pollLoadedEvent;
     }
 }

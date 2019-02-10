@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {StorageService} from './storage.service';
-import {CanVote, Choice, Food, PollWithChoices, VotingAllowed} from '../types';
+import {CanVote, Food, PollWithChoices, VotingAllowed} from '../types';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/internal/Observable';
 import {Answer} from '../types/answer';
@@ -45,5 +45,9 @@ export class ApiService {
 
     getAnswerForUser(): Observable<Answer> {
         return this.http.get<Answer>(this.API_URL + 'selectedChoice', this.httpOptions);
+    }
+
+    getAllAnswers(): Observable<Answer[]> {
+        return this.http.get<Answer[]>(this.API_URL + 'votes/1', this.httpOptions);
     }
 }

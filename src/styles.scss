@@ -53,7 +53,9 @@
 }
 
 .answerprogress {
-    height: 35px;
+    .progress {
+        height: 35px;
+    }
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
@@ -63,13 +65,13 @@
 }
 
 .row {
-    margin-left: 0!important;
-    margin-right: 0!important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
 .col-12 {
-    padding-left: 0!important;
-    padding-right: 0!important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 
 .copyToken {

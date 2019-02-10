@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {OverviewComponent} from "./overview/overview.component";
-import {LoginComponent} from "./login/login.component";
-import {SettingsComponent} from "./settings/settings.component";
-import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
-import {LogoutComponent} from "./logout/logout.component";
+import {OverviewComponent} from './overview/overview.component';
+import {LoginComponent} from './login/login.component';
+import {SettingsComponent} from './settings/settings.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
+import {LogoutComponent} from './logout/logout.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/overview', pathMatch: 'full'},
@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

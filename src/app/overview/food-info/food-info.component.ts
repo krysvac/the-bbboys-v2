@@ -45,7 +45,7 @@ export class FoodInfoComponent implements OnInit {
         return key === moment().isoWeekday().toString();
     }
 
-    public translateDay(day: string) {
+    public translateDay(day: string): string {
         switch (day) {
             case '1':
                 return 'Måndag';

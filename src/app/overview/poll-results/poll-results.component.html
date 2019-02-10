@@ -1,3 +1,20 @@
-<p>
-  poll-results works!
-</p>
+<h3 *ngIf="choicesLoaded && answersLoaded">{{totalAmountOfAnswers}} Svar</h3>
+
+<div *ngIf="choicesLoaded && answersLoaded && answers !== {}">
+    <div *ngFor="let choice of choices">
+        <div class="text-left">{{choice.value}} ({{answers[choice.id].percent | number: '1.0-2'}}%)</div>
+        <ngb-progressbar class="answerprogress" type="primary" [value]="answers[choice.id].amount"
+                         [max]="totalAmountOfAnswers"></ngb-progressbar>
+        <br>
+    </div>
+</div>
+
+<div *ngIf="choicesLoaded && answersLoaded && answers === {}">
+    <div *ngFor="let choice of choices">
+        <div class="text-left">{{choice.value}} (0 %)</div>
+        <ngb-progressbar class="answerprogress" type="primary" [value]="0" [max]="0"></ngb-progressbar>
+        <br>
+    </div>
+</div>
+
+
