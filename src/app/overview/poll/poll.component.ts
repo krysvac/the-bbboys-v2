@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService, UserService} from '../_services';
-import {PollWithChoices} from '../types';
-import * as moment from 'moment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import * as moment from 'moment';
+import {PollWithChoices} from '../../types';
+import {ApiService, UserService} from '../../_services';
+
 
 @Component({
     selector: 'app-poll',

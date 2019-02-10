@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {Food} from '../types';
-import {ApiService} from '../_services';
+import {Food} from '../../types';
+import {ApiService} from '../../_services';
+
 
 @Component({
     selector: 'app-food-info',
