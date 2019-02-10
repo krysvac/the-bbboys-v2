@@ -8,13 +8,13 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/overview']">Hem</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="user.isLoggedIn()">
                 <a class="nav-link" [routerLink]="['/settings']">Inställningar</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="user.isLoggedIn()">
                 <a class="nav-link" [routerLink]="['/logout']">Logga ut</a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
+            <li class="nav-item" routerLinkActive="active" *ngIf="!user.isLoggedIn()">
                 <a class="nav-link" [routerLink]="['/login']">Logga in</a>
             </li>
         </ul>
