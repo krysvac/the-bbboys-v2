@@ -23,7 +23,9 @@
                     *ngFor="let item of villa | keyvalue ; index as index">
                     <td>
                         <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#villa' + item.key)"
-                           [attr.aria-expanded]="!isCollapsed" [attr.aria-controls]="'#villa' + item.key" role="button">
+                           [attr.aria-expanded]="shouldBeOpen('#villa', item.key)"
+                           [attr.aria-controls]="'#villa' + item.key" role="button" data-toggle="collapse"
+                           [ngClass]="{'collapsed': !shouldBeOpen('#villa', item.key)}">
                             {{translateDay(item.key)}}
                         </a>
                     </td>
