@@ -153,3 +153,10 @@
         left: 48%;
     }
 }
+
+.custom-radio {
+    .custom-control-label::before {
+        background-color: #dee2e6;
+        border: none;
+    }
+}

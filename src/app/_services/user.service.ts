@@ -35,13 +35,13 @@ export class UserService {
     }
 
     public setUserLoggedIn(username: string, token: string, admin: boolean): void {
-        this.storage.store('loggedIn', true);
         this.storage.store('username', username);
         this.storage.store('auth_token', token);
         this.storage.store('admin', admin);
+        this.storage.store('loggedIn', true);
     }
 
-    public setUserLoggedOut(setJustLoggedOut?: boolean): void {
+    public setUserLoggedOut(): void {
         this.storage.clearAll();
     }
 

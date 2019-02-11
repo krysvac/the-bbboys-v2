@@ -40,7 +40,7 @@ export class ApiService {
     }
 
     getVotingIsAllowed(): Observable<VotingAllowed> {
-        return this.http.get<VotingAllowed>(this.API_URL + 'votingAllowed', this.httpOptions);
+        return this.http.get<VotingAllowed>(this.API_URL + 'votingIsAllowed', this.httpOptions);
     }
 
     getAnswerForUser(): Observable<Answer> {

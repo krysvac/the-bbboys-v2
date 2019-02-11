@@ -1,13 +1,13 @@
 <hr>
+<h2>Idag är det {{getDay()}}</h2>
+<h3 *ngIf="pollLoaded">{{pollWithChoices.poll.question}}</h3>
+<h3 *ngIf="pollLoaded && !user.isLoggedIn()"><a [routerLink]="['/login']">Logga in för att rösta</a></h3>
 <form *ngIf="user.isLoggedIn() && pollLoaded" (ngSubmit)="onSubmit()" [formGroup]="voteForm">
-    <h2>Idag är det {{getDay()}}</h2>
-    <h3>{{pollWithChoices.poll.question}}</h3>
-
     <div class="form-group" *ngFor="let choice of pollWithChoices.choices">
         <div class="custom-control custom-radio">
             <input type="radio" id="{{'choice_' + choice.id}}" formControlName="choice" value="{{choice.value}}"
                    class="custom-control-input" [checked]="choiceVotedFor === choice.id"
-                   [disabled]="!votingIsAllowed || !canVoteToday">
+                   [attr.disabled]="!votingIsAllowed || !canVoteToday">
             <label class="custom-control-label" for="{{'choice_' + choice.id}}">{{choice.value}}</label>
         </div>
     </div>
@@ -20,11 +20,7 @@
     </button>
 </form>
 
-<h4 *ngIf="user.isLoggedIn() && pollLoaded"
+<h4 *ngIf="pollLoaded && user.isLoggedIn()"
     [ngClass]="{'text-success': votingIsAllowed, 'text-danger': !votingIsAllowed}">Röstningen
-    är{{votingIsAllowed ? 'öppen tills 11:30!' : 'stängd för dagen!'}}</h4>
-
-<h2>Idag är det {{getDay()}}</h2>
-<h3 *ngIf="pollLoaded">{{pollWithChoices.poll.question}}</h3>
-<h3 *ngIf="pollLoaded"><a [routerLink]="['/login']">Logga in för att rösta</a></h3>
+    är {{votingIsAllowed ? 'öppen tills 11:30!' : 'stängd för dagen!'}}</h4>
 <hr>

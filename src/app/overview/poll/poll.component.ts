@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 import * as moment from 'moment';
 import {Choice, PollWithChoices} from '../../types';
 import {ApiService, StorageService, UserService} from '../../_services';
