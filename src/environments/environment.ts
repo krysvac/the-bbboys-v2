@@ -6,7 +6,7 @@ export const environment = {
     production: false,
     title: ' | The BBBoys mat-info',
     navbarTitle: 'The BBBoys',
-    apiUrl: 'http://localhost:6969/api'
+    apiUrl: 'http://localhost:6969'
 };
 
 /*
