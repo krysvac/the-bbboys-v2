@@ -23,6 +23,7 @@ export class PollComponent implements OnInit {
     public voteErrorMsg: string = '';
 
     private static pollLoadedEvent: EventEmitter<Choice[]> = new EventEmitter<Choice[]>();
+    private static userVotedEvent: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(public user: UserService, private api: ApiService, private storage: StorageService) {
     }
@@ -84,6 +85,7 @@ export class PollComponent implements OnInit {
             () => {
                 this.canVoteToday = false;
                 this.voteError = false;
+                PollComponent.getUserVotedEventEmitter().emit(true);
             },
             err => {
                 this.voteError = true;
@@ -132,5 +134,9 @@ export class PollComponent implements OnInit {
 
     public static getPollLoadedEventEmitter(): EventEmitter<Choice[]> {
         return this.pollLoadedEvent;
+    }
+
+    public static getUserVotedEventEmitter(): EventEmitter<any> {
+        return this.userVotedEvent;
     }
 }

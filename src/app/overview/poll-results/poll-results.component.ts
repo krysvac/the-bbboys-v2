@@ -26,18 +26,12 @@ export class PollResultsComponent implements OnInit {
                 this.initAnswers(data);
                 this.choicesLoaded = true;
 
-                this.api.getAllAnswers().subscribe(
-                    data => {
-                        this.totalAmountOfAnswers = data.length;
-
-                        if (this.totalAmountOfAnswers > 0) {
-                            this.countAnswerAmounts(data);
-                        }
-
-                        this.answersLoaded = true;
-                    }
-                );
+                this.loadAnswers();
             }
+        );
+
+        PollComponent.getUserVotedEventEmitter().subscribe(
+            () => this.loadAnswers()
         );
     }
 
@@ -59,8 +53,21 @@ export class PollResultsComponent implements OnInit {
 
         for (let answer of answers) {
             let percent = this.answers[answer.choice_id].amount / this.totalAmountOfAnswers;
-            let percent_friendly = percent * 100;
-            this.answers[answer.choice_id].percent = percent_friendly;
+            this.answers[answer.choice_id].percent = percent * 100;
         }
+    }
+
+    private loadAnswers() {
+        this.api.getAllAnswers().subscribe(
+            data => {
+                this.totalAmountOfAnswers = data.length;
+
+                if (this.totalAmountOfAnswers > 0) {
+                    this.countAnswerAmounts(data);
+                }
+
+                this.answersLoaded = true;
+            }
+        );
     }
 }
