@@ -19,6 +19,9 @@ export class PollComponent implements OnInit {
     public votingIsAllowed: boolean = true;
     public choiceVotedFor: number = -1;
 
+    public voteError: boolean = false;
+    public voteErrorMsg: string = '';
+
     private static pollLoadedEvent: EventEmitter<Choice[]> = new EventEmitter<Choice[]>();
 
     constructor(public user: UserService, private api: ApiService, private storage: StorageService) {
@@ -34,21 +37,25 @@ export class PollComponent implements OnInit {
         );
 
         if (this.user.isLoggedIn()) {
-            this.api.getUserCanVote().subscribe(
-                data => {
-                    this.canVoteToday = data.canVote;
+            if (this.storage.retrieve('auth_token') === '') {
 
-                    if (!data.canVote) {
-                        this.api.getAnswerForUser().subscribe(
-                            data => this.choiceVotedFor = data.choice_id
-                        );
+            } else {
+                this.api.getUserCanVote().subscribe(
+                    data => {
+                        this.canVoteToday = data.canVote;
+
+                        if (!data.canVote) {
+                            this.api.getAnswerForUser().subscribe(
+                                data => this.choiceVotedFor = data.choice_id
+                            );
+                        }
                     }
-                }
-            );
+                );
 
-            this.api.getVotingIsAllowed().subscribe(
-                data => this.votingIsAllowed = data.votingAllowed
-            );
+                this.api.getVotingIsAllowed().subscribe(
+                    data => this.votingIsAllowed = data.votingAllowed
+                );
+            }
         }
 
         this.voteForm = new FormGroup({
@@ -63,8 +70,45 @@ export class PollComponent implements OnInit {
         return PollComponent.translateDay(moment().isoWeekday().toString());
     }
 
-    public onSubmit(): void {
+    get choice(): AbstractControl {
+        return this.voteForm.get('choice');
+    }
 
+    public onSubmit(): void {
+        let details = <Object>{
+            poll_id: this.pollWithChoices.poll.id,
+            choice_id: this.choice.value
+        };
+
+        this.api.vote(details).subscribe(
+            () => {
+                this.canVoteToday = false;
+                this.voteError = false;
+            },
+            err => {
+                this.voteError = true;
+                switch (err.error['status']) {
+                    case '401_ALREADY_VOTED': {
+                        this.voteErrorMsg = 'Du har redan röstat idag!';
+                        this.canVoteToday = false;
+                        this.voteForm.reset();
+                        this.api.getAnswerForUser().subscribe(
+                            data => this.choiceVotedFor = data.choice_id
+                        );
+                        break;
+                    }
+                    case '401_EXPIRED': {
+                        this.voteErrorMsg = 'Du har blivit utloggad på grund av inaktivitet. Var vänlig logga in igen!';
+                        this.user.setUserLoggedOut();
+                        break;
+                    }
+                    default: {
+                        this.voteErrorMsg = 'Ett oväntat fel har inträffat. Försök igen!';
+                        break;
+                    }
+                }
+            }
+        );
     }
 
     public static translateDay(day: string): string {

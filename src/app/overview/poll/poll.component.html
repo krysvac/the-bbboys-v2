@@ -5,9 +5,9 @@
 <form *ngIf="user.isLoggedIn() && pollLoaded" (ngSubmit)="onSubmit()" [formGroup]="voteForm">
     <div class="form-group" *ngFor="let choice of pollWithChoices.choices">
         <div class="custom-control custom-radio">
-            <input type="radio" id="{{'choice_' + choice.id}}" formControlName="choice" value="{{choice.value}}"
+            <input type="radio" id="{{'choice_' + choice.id}}" formControlName="choice" value="{{choice.id}}"
                    class="custom-control-input" [checked]="choiceVotedFor === choice.id"
-                   [attr.disabled]="!votingIsAllowed || !canVoteToday">
+                   [attr.disabled]="!votingIsAllowed || !canVoteToday ? 'true' : null">
             <label class="custom-control-label" for="{{'choice_' + choice.id}}">{{choice.value}}</label>
         </div>
     </div>
@@ -19,6 +19,8 @@
     <button type="submit" class="btn btn-primary" *ngIf="!votingIsAllowed" [disabled]="true">Röstning stängd
     </button>
 </form>
+<br>
+<div class="alert alert-danger" *ngIf="voteError">{{voteErrorMsg}}</div>
 
 <h4 *ngIf="pollLoaded && user.isLoggedIn()"
     [ngClass]="{'text-success': votingIsAllowed, 'text-danger': !votingIsAllowed}">Röstningen
