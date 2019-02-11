@@ -46,7 +46,7 @@ export class UserService {
     }
 
     public isLoggedIn(): boolean {
-        return this.storage.retrieve('loggedIn') !== '';
+        return this.storage.retrieve('loggedIn') !== '' && this.storage.retrieve('auth_token') !== '';
     }
 
     public isAdmin(): boolean {
