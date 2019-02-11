@@ -11,10 +11,14 @@ import {Answer} from '../types/answer';
 })
 export class ApiService {
     private readonly API_URL;
+
+    private addAuthToken(headers: HttpHeaders) {
+        headers.append('token', this.storage.retrieve('auth_token'));
+    }
+
     public httpOptions = {
         headers: new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                'token': this.storage.retrieve('auth_token')
+                'Content-Type': 'application/json; charset=utf-8'
             }
         )
     };
@@ -27,6 +31,10 @@ export class ApiService {
         return this.http.get<PollWithChoices>(this.API_URL + 'poll/1', this.httpOptions);
     }
 
+    getAllAnswers(): Observable<Answer[]> {
+        return this.http.get<Answer[]>(this.API_URL + 'votes/1', this.httpOptions);
+    }
+
     getBistroJFood(): Observable<Food> {
         return this.http.get<Food>(this.API_URL + 'food/bistroj', this.httpOptions);
     }
@@ -36,18 +44,47 @@ export class ApiService {
     }
 
     getUserCanVote(): Observable<CanVote> {
-        return this.http.get<CanVote>(this.API_URL + 'userCanVote', this.httpOptions);
+        return this.http.get<CanVote>(this.API_URL + 'userCanVote', {
+                headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'token': this.storage.retrieve('auth_token')
+                    }
+                )
+            }
+        );
     }
 
     getVotingIsAllowed(): Observable<VotingAllowed> {
-        return this.http.get<VotingAllowed>(this.API_URL + 'votingIsAllowed', this.httpOptions);
+        return this.http.get<VotingAllowed>(this.API_URL + 'votingIsAllowed', {
+                headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'token': this.storage.retrieve('auth_token')
+                    }
+                )
+            }
+        );
     }
 
     getAnswerForUser(): Observable<Answer> {
-        return this.http.get<Answer>(this.API_URL + 'selectedChoice', this.httpOptions);
+        return this.http.get<Answer>(this.API_URL + 'selectedChoice', {
+                headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'token': this.storage.retrieve('auth_token')
+                    }
+                )
+            }
+        );
     }
 
-    getAllAnswers(): Observable<Answer[]> {
-        return this.http.get<Answer[]>(this.API_URL + 'votes/1', this.httpOptions);
+    vote(obj: Object): Observable<any> {
+        this.addAuthToken(this.httpOptions.headers);
+        return this.http.post(this.API_URL + 'vote', JSON.stringify(obj), {
+                headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'token': this.storage.retrieve('auth_token')
+                    }
+                )
+            }
+        );
     }
 }
