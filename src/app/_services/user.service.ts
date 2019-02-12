@@ -14,13 +14,6 @@ export class UserService {
         )
     };
 
-    public httpOptionsAuth: Object = {
-        headers: new HttpHeaders({
-                'Content-Type': 'application/json; charset=utf-8',
-                'token': this.storage.retrieve('auth_token')
-            }
-        )
-    };
 
     constructor(private http: HttpClient, private storage: StorageService) {
         this.API_URL = environment.apiUrl + '/';
@@ -31,7 +24,14 @@ export class UserService {
     }
 
     public auth(): Observable<any> {
-        return this.http.get(this.API_URL + 'validateAuth', this.httpOptionsAuth);
+        return this.http.get(this.API_URL + 'validateAuth', {
+                headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'token': this.storage.retrieve('auth_token')
+                    }
+                )
+            }
+        );
     }
 
     public setUserLoggedIn(username: string, token: string, admin: boolean): void {
