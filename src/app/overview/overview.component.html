@@ -1,3 +1,9 @@
+<p id="tokenExpiredMsg" *ngIf="tokenExpired">
+    <ngb-alert [dismissible]="true" [type]="'danger'" (close)="dismissTokenExpired()">
+        Du har blivit utloggad på grund av inaktivitet. Var vänlig logga in igen!
+    </ngb-alert>
+</p>
+
 <app-food-info></app-food-info>
 
 <div class="col-6 offset-3 text-center">

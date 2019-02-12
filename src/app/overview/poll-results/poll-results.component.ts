@@ -3,6 +3,7 @@ import {Choice} from '../../types';
 import {ApiService} from '../../_services';
 import {PollComponent} from '../poll/poll.component';
 import {Answer} from '../../types/answer';
+import {OverviewComponent} from '../overview.component';
 
 @Component({
     selector: 'app-poll-results',
@@ -67,6 +68,11 @@ export class PollResultsComponent implements OnInit {
                 }
 
                 this.answersLoaded = true;
+            },
+            err => {
+                if (err.error['status'] === '401_EXPIRED') {
+                    OverviewComponent.tokenExpiredEvent().emit(true);
+                }
             }
         );
     }
