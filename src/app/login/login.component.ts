@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../_services';
 import {Router} from '@angular/router';
 import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {environment} from '../../environments/environment';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-login',
@@ -13,7 +15,8 @@ export class LoginComponent implements OnInit {
     public loginError: boolean = false;
     public loginErrorMsg: string = '';
 
-    constructor(private user: UserService, private router: Router) {
+    constructor(private user: UserService, private router: Router, private titleService: Title) {
+        this.titleService.setTitle('Logga in' + environment.title);
     }
 
     ngOnInit() {
