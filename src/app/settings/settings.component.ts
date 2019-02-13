@@ -14,6 +14,9 @@ export class SettingsComponent implements OnInit {
     public createRegisterLinkError: boolean = false;
     public createRegisterLinkErrorMsg: string = '';
     public registrationLinks: RegistrationLink[];
+    public snackbarMessage: string = '';
+    public changePasswordError: boolean = false;
+    public changePasswordErrorMsg: string = '';
 
     private changePasswordForm: FormGroup;
     private readonly passwordPattern: RegExp = new RegExp('^[a-zA-Z0-9åÅäÄöÖ!@#_.]+$');
@@ -42,19 +45,63 @@ export class SettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.user.isAdmin()) {
-            this.api.getRegisterLinks().subscribe(
-                data => this.registrationLinks = data
+        this.getRegisterLinks();
+    }
+
+    get oldPassword(): AbstractControl {
+        return this.changePasswordForm.get('oldPassword');
+    }
+
+    get newPassword1(): AbstractControl {
+        return this.changePasswordForm.get('newPassword1');
+    }
+
+    get newPassword2(): AbstractControl {
+        return this.changePasswordForm.get('newPassword2');
+    }
+
+    public onSubmit(): void {
+        if (this.changePasswordForm.status === 'VALID') {
+            let details: Object = {
+                oldPassword: this.oldPassword.value,
+                newPassword: this.newPassword1.value
+            };
+
+            this.api.changePassword(details).subscribe(
+                () => {
+                    this.changePasswordError = false;
+                    this.showSnackbar('Lösenordet uppdaterades');
+                    this.changePasswordForm.reset();
+                },
+                err => {
+                    this.changePasswordError = true;
+                    switch (err.error['status']) {
+                        case '401_CURRENT_PASSWORD': {
+                            this.changePasswordErrorMsg = 'Fel nuvarande lösenord!';
+                            break;
+                        }
+                        default: {
+                            this.changePasswordErrorMsg = 'Något gick fel. Försök igen!';
+                            break;
+                        }
+                    }
+                }
             );
         }
     }
 
-    public onSubmit(): void {
-
-    }
-
-    public createRegisterLink(): void {
-
+    public createLink(): void {
+        this.api.createRegisterLink().subscribe(
+            () => {
+                this.createRegisterLinkError = false;
+                this.showSnackbar('Länken skapades!');
+                this.getRegisterLinks();
+            },
+            () => {
+                this.createRegisterLinkError = true;
+                this.createRegisterLinkErrorMsg = 'Ett oväntat fel har inträffat. Försök igen!';
+            }
+        );
     }
 
     public copyRegisterLink(token: string): void {
@@ -72,11 +119,15 @@ export class SettingsComponent implements OnInit {
         document.execCommand('copy');
         document.body.removeChild(selBox);
 
-        let x = document.getElementById('snackbar');
-        x.className = 'show';
-        setTimeout(function () {
-            x.className = x.className.replace('show', '');
-        }, 3000);
+        this.showSnackbar('Länken kopierades!');
+    }
+
+    private getRegisterLinks(): void {
+        if (this.user.isAdmin()) {
+            this.api.getRegisterLinks().subscribe(
+                data => this.registrationLinks = data
+            );
+        }
     }
 
     private static passwordMatchValidator(g: FormGroup): null | Object {
@@ -89,6 +140,15 @@ export class SettingsComponent implements OnInit {
             const forbidden = pattern.test(control.value);
             return !forbidden ? {'forbiddenPassword': {value: control.value}} : null;
         };
+    }
+
+    private showSnackbar(message: string) {
+        this.snackbarMessage = message;
+        let x = document.getElementById('snackbar');
+        x.className = 'show';
+        setTimeout(function () {
+            x.className = x.className.replace('show', '');
+        }, 3000);
     }
 
 }

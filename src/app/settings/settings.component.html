@@ -6,28 +6,76 @@
         <label for="oldPassword">Gammalt lösenord</label>
         <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword"
                placeholder="*********" required>
+        <br *ngIf="oldPassword.invalid && (oldPassword.dirty || oldPassword.touched)">
+        <div class="alert alert-danger" *ngIf="oldPassword.invalid && (oldPassword.dirty || oldPassword.touched)">
+            <div *ngIf="oldPassword.errors.required">
+                Ett lösenord krävs!
+            </div>
+            <div *ngIf="oldPassword.errors.maxlength">
+                Ditt lösenord får inte vara längre än 50 tecken!
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label for="newPassword1">Nytt lösenord</label>
         <input type="password" class="form-control" id="newPassword1" formControlName="newPassword1"
                placeholder="*********" required aria-describedby="passwordHelpBlock">
         <small id="passwordHelpBlock" class="form-text text-muted">
-            Ditt lösenord måste vara mellan 10-64 tecken långt och får bara innehålla A-Ö 0-9 ! @ # _ .
+            Ditt lösenord måste vara mellan 10-50 tecken långt och får bara innehålla A-Ö 0-9 ! @ # _ .
         </small>
+        <br *ngIf="newPassword1.invalid && (newPassword1.dirty || newPassword1.touched)">
+        <div class="alert alert-danger" *ngIf="newPassword1.invalid && (newPassword1.dirty || newPassword1.touched)">
+            <div *ngIf="newPassword1.errors.required">
+                Ett lösenord krävs!
+            </div>
+            <div *ngIf="newPassword1.errors.minlength">
+                Ditt lösenord måste vara minst 10 tecken!
+            </div>
+            <div *ngIf="newPassword1.errors.maxlength">
+                Ditt lösenord får inte vara längre än 50 tecken!
+            </div>
+            <div *ngIf="newPassword1.errors.forbiddenPassword && !newPassword1.errors.minlength &&
+            !newPassword1.errors.required">
+                Ogiltigt lösenord. Ditt lösenord får bara innehålla <strong>A-Ö 0-9 ! @ # _ .</strong>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <label for="newPassword2">Upprepa nytt lösenord</label>
         <input type="password" class="form-control" id="newPassword2" formControlName="newPassword2"
                placeholder="*********" required>
+        <br *ngIf="newPassword2.invalid && (newPassword2.dirty || newPassword2.touched)">
+        <div class="alert alert-danger" *ngIf="newPassword2.invalid && (newPassword2.dirty || newPassword2.touched)">
+            <div *ngIf="newPassword2.errors.required">
+                Ett lösenord krävs!
+            </div>
+            <div *ngIf="newPassword2.errors.minlength">
+                Ditt lösenord måste vara minst 10 tecken!
+            </div>
+            <div *ngIf="newPassword2.errors.maxlength">
+                Ditt lösenord får inte vara längre än 50 tecken!
+            </div>
+            <div *ngIf="newPassword2.errors.forbiddenPassword && !newPassword2.errors.minlength &&
+            !newPassword2.errors.required">
+                Ogiltigt lösenord. Ditt lösenord får bara innehålla <strong>A-Ö 0-9 ! @ # _ .</strong>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Byt lösenord</button>
+    <div class="alert alert-danger" *ngIf="changePasswordForm.invalid && newPassword1.valid && newPassword2.valid">
+      <span *ngIf="changePasswordForm.errors.mismatch">
+          Ditt nya lösenord matchar inte i båda fälten!
+      </span>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]=" changePasswordForm.invalid">Byt lösenord</button>
+    <br *ngIf="changePasswordError">
+    <div class="alert alert-danger" *ngIf="changePasswordError">{{changePasswordErrorMsg}}</div>
 </form>
 <div class="error" id="changePasswordError"></div>
 <div class="success" id="changePasswordSuccess"></div>
 <div *ngIf="user.isAdmin()">
     <hr>
     <h2 style="margin-top: 30px;">Skapa registreringslänk</h2>
-    <button type="submit" class="btn btn-primary" (click)="createRegisterLink()">Skapa länk</button>
+    <button type="submit" class="btn btn-primary" (click)="createLink()">Skapa länk</button>
     <div class="alert alert-danger" *ngIf="createRegisterLinkError">{{createRegisterLinkErrorMsg}}</div>
     <hr>
     <h2 style="margin-top: 30px;">Aktiva registreringslänkar</h2>
@@ -46,7 +94,7 @@
                 {{link.token}}
             </td>
             <td>
-                {{link.used}}
+                {{link.used ? 'Ja' : 'Nej'}}
             </td>
             <td>
                 {{link.timestamp}}
@@ -57,5 +105,5 @@
         </tr>
         </tbody>
     </table>
-    <div id="snackbar">Länken kopierades!</div>
+    <div id="snackbar">{{snackbarMessage}}</div>
 </div>

@@ -15,20 +15,20 @@
         class="alert alert-danger">
         <div *ngIf="username.errors !== null && (username.dirty || username.touched)">
             <div *ngIf="username.errors.required !== null && username.errors.required === true">
-                Ett användarnamn krävs
+                Ett användarnamn krävs!
             </div>
             <div *ngIf="username.errors.maxlength">
-                Ditt användarnamn får inte vara längre än 50 tecken
+                Ditt användarnamn får inte vara längre än 50 tecken!
             </div>
         </div>
 
         <div *ngIf="password.errors !== null && (password.dirty || password.touched)">
             <div *ngIf="password.errors.required !== null && password.errors.required === true">
-                Ett lösenord krävs
+                Ett lösenord krävs!
             </div>
 
             <div *ngIf="password.errors.maxlength">
-                Ditt lösenord får inte vara längre än 50 tecken
+                Ditt lösenord får inte vara längre än 50 tecken!
             </div>
         </div>
     </div>

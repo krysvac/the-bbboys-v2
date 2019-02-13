@@ -102,4 +102,28 @@ export class ApiService {
             );
         }
     }
+
+    createRegisterLink(): Observable<any> {
+        if (this.user.isAdmin()) {
+            return this.http.post(this.API_URL + 'createLink', null, {
+                    headers: new HttpHeaders({
+                            'Content-Type': 'application/json; charset=utf-8',
+                            'token': this.storage.retrieve('auth_token')
+                        }
+                    )
+                }
+            );
+        }
+    }
+
+    changePassword(obj: Object): Observable<any> {
+        return this.http.post(this.API_URL + 'changePassword', JSON.stringify(obj), {
+                headers: new HttpHeaders({
+                        'Content-Type': 'application/json; charset=utf-8',
+                        'token': this.storage.retrieve('auth_token')
+                    }
+                )
+            }
+        );
+    }
 }
