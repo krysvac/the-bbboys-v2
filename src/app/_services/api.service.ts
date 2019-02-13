@@ -5,6 +5,8 @@ import {CanVote, Food, PollWithChoices, VotingAllowed} from '../types';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/internal/Observable';
 import {Answer} from '../types/answer';
+import {UserService} from './user.service';
+import {RegistrationLink} from '../types/registrationLink';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +25,7 @@ export class ApiService {
         )
     };
 
-    constructor(private http: HttpClient, private storage: StorageService) {
+    constructor(private http: HttpClient, private storage: StorageService, private user: UserService) {
         this.API_URL = environment.apiUrl + '/';
     }
 
@@ -86,5 +88,18 @@ export class ApiService {
                 )
             }
         );
+    }
+
+    getRegisterLinks(): Observable<RegistrationLink[]> {
+        if (this.user.isAdmin()) {
+            return this.http.get<RegistrationLink[]>(this.API_URL + 'registrationLinks', {
+                    headers: new HttpHeaders({
+                            'Content-Type': 'application/json; charset=utf-8',
+                            'token': this.storage.retrieve('auth_token')
+                        }
+                    )
+                }
+            );
+        }
     }
 }

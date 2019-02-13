@@ -1,3 +1,61 @@
-<p>
-  settings works!
-</p>
+<h1 style="margin-top: 30px;">Inställningar</h1>
+<hr>
+<h2 style="margin-top: 30px;">Byt lösenord</h2>
+<form [formGroup]="changePasswordForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label for="oldPassword">Gammalt lösenord</label>
+        <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword"
+               placeholder="*********" required>
+    </div>
+    <div class="form-group">
+        <label for="newPassword1">Nytt lösenord</label>
+        <input type="password" class="form-control" id="newPassword1" formControlName="newPassword1"
+               placeholder="*********" required aria-describedby="passwordHelpBlock">
+        <small id="passwordHelpBlock" class="form-text text-muted">
+            Ditt lösenord måste vara mellan 10-64 tecken långt och får bara innehålla A-Ö 0-9 ! @ # _ .
+        </small>
+    </div>
+    <div class="form-group">
+        <label for="newPassword2">Upprepa nytt lösenord</label>
+        <input type="password" class="form-control" id="newPassword2" formControlName="newPassword2"
+               placeholder="*********" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Byt lösenord</button>
+</form>
+<div class="error" id="changePasswordError"></div>
+<div class="success" id="changePasswordSuccess"></div>
+<div *ngIf="user.isAdmin()">
+    <hr>
+    <h2 style="margin-top: 30px;">Skapa registreringslänk</h2>
+    <button type="submit" class="btn btn-primary" (click)="createRegisterLink()">Skapa länk</button>
+    <div class="alert alert-danger" *ngIf="createRegisterLinkError">{{createRegisterLinkErrorMsg}}</div>
+    <hr>
+    <h2 style="margin-top: 30px;">Aktiva registreringslänkar</h2>
+    <table class="table table-hover">
+        <thead>
+        <tr class="justify-content-start">
+            <th scope="col">Länk</th>
+            <th scope="col">Använd?</th>
+            <th scope="col">Skapad</th>
+            <th scope="col">Kopiera</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let link of registrationLinks">
+            <td>
+                {{link.token}}
+            </td>
+            <td>
+                {{link.used}}
+            </td>
+            <td>
+                {{link.timestamp}}
+            </td>
+            <td>
+                <a (click)="copyRegisterLink(link.token)" class="copyToken"><i class="fas fa-lg fa-clipboard"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div id="snackbar">Länken kopierades!</div>
+</div>

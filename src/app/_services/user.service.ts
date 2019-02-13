@@ -51,7 +51,7 @@ export class UserService {
 
     public isAdmin(): boolean {
         if (this.isLoggedIn()) {
-            return this.storage.retrieve('admin') === 'true';
+            return this.storage.retrieve('admin').toString() === '1';
         } else {
             return false;
         }
