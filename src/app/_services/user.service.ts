@@ -56,12 +56,4 @@ export class UserService {
             return false;
         }
     }
-
-    public getUsername(): string {
-        return this.storage.retrieve('username');
-    }
-
-    public getUserId(): string {
-        return this.storage.retrieve('id');
-    }
 }

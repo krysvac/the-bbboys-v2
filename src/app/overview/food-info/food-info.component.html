@@ -21,7 +21,7 @@
                 <tbody>
                 <tr [ngClass]="{'activeDay': foodItemIsForToday(item.key)}"
                     *ngFor="let item of villa | keyvalue ; index as index">
-                    <td>
+                    <td class="cursor-point">
                         <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#villa' + item.key)"
                            [attr.aria-expanded]="shouldBeOpen('#villa', item.key)"
                            [attr.aria-controls]="'#villa' + item.key" role="button" data-toggle="collapse"
@@ -63,7 +63,7 @@
                 <tbody>
                 <tr [ngClass]="{'activeDay': foodItemIsForToday(item.key)}"
                     *ngFor="let item of bistroJ | keyvalue ; index as index">
-                    <td>
+                    <td class="cursor-point">
                         <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#bistroJ' + item.key)"
                            [attr.aria-expanded]="!isCollapsed" [attr.aria-controls]="'#bistroJ' + item.key"
                            role="button">

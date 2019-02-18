@@ -105,7 +105,7 @@ export class SettingsComponent implements OnInit {
     }
 
     public copyRegisterLink(token: string): void {
-        let link = window.location.origin + '/register?token=' + token;
+        let link = window.location.origin + '/register/' + token;
 
         let selBox = document.createElement('textarea');
         selBox.style.position = 'fixed';
@@ -122,17 +122,17 @@ export class SettingsComponent implements OnInit {
         this.showSnackbar('Länken kopierades!');
     }
 
+    public static passwordMatchValidator(g: FormGroup): null | Object {
+        return g.get('newPassword1').value === g.get('newPassword2').value
+            ? null : {'mismatch': true};
+    }
+
     private getRegisterLinks(): void {
         if (this.user.isAdmin()) {
             this.api.getRegisterLinks().subscribe(
                 data => this.registrationLinks = data
             );
         }
-    }
-
-    private static passwordMatchValidator(g: FormGroup): null | Object {
-        return g.get('newPassword1').value === g.get('newPassword2').value
-            ? null : {'mismatch': true};
     }
 
     private forbiddenPasswordValidator(pattern: RegExp): ValidatorFn {

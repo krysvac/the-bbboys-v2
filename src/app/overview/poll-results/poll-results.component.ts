@@ -24,7 +24,7 @@ export class PollResultsComponent implements OnInit {
         PollComponent.getPollLoadedEventEmitter().subscribe(
             data => {
                 this.choices = data;
-                this.initAnswers(data);
+                this.initAnswers(this.choices);
                 this.choicesLoaded = true;
 
                 this.loadAnswers();
@@ -32,18 +32,20 @@ export class PollResultsComponent implements OnInit {
         );
 
         PollComponent.getUserVotedEventEmitter().subscribe(
-            () => this.loadAnswers()
+            () => {
+                this.initAnswers(this.choices);
+                this.loadAnswers();
+            }
         );
     }
 
     private initAnswers(choices: Choice[]): void {
         for (let choice of choices) {
-            if (!this.answers[choice.id]) {
-                this.answers[choice.id] = {
-                    amount: 0,
-                    percent: 0
-                };
-            }
+            this.answers[choice.id] = {
+                amount: 0,
+                percent: 0
+            };
+
         }
     }
 
