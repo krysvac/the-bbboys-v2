@@ -126,4 +126,12 @@ export class ApiService {
             }
         );
     }
+
+    validateToken(obj: Object): Observable<any> {
+        return this.http.post(this.API_URL + 'validateToken', JSON.stringify(obj), this.httpOptions);
+    }
+
+    registerUser(obj: Object): Observable<any> {
+        return this.http.post(this.API_URL + 'register', JSON.stringify(obj), this.httpOptions);
+    }
 }

@@ -18,6 +18,7 @@ import {OverviewComponent} from './overview/overview.component';
 import {FoodInfoComponent} from './overview/food-info/food-info.component';
 import {PollComponent} from './overview/poll/poll.component';
 import {PollResultsComponent} from './overview/poll-results/poll-results.component';
+import {RegisterComponent} from './register/register.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import {PollResultsComponent} from './overview/poll-results/poll-results.compone
         LogoutComponent,
         FoodInfoComponent,
         PollComponent,
-        PollResultsComponent
+        PollResultsComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule,

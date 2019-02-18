@@ -6,6 +6,7 @@ import {SettingsComponent} from './settings/settings.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {LogoutComponent} from './logout/logout.component';
 import {AuthGuard} from './auth/auth.guard';
+import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
     {path: '', redirectTo: '/overview', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
     {path: 'logout', component: LogoutComponent, canActivate: [AuthGuard]},
     {path: 'overview', component: OverviewComponent},
     {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
+    {path: 'register/:token', component: RegisterComponent},
     {path: '**', component: PageNotFoundComponent}
 ];
 
