@@ -17,11 +17,11 @@ export class SettingsComponent implements OnInit {
     public snackbarMessage: string = '';
     public changePasswordError: boolean = false;
     public changePasswordErrorMsg: string = '';
+    public changePasswordForm: FormGroup;
 
-    private changePasswordForm: FormGroup;
     private readonly passwordPattern: RegExp = new RegExp('^[a-zA-Z0-9åÅäÄöÖ!@#_.]+$');
 
-    constructor(private titleService: Title, private user: UserService, private api: ApiService) {
+    constructor(private titleService: Title, private api: ApiService, public user: UserService) {
         this.titleService.setTitle('Inställningar' + environment.title);
 
         this.changePasswordForm = new FormGroup({

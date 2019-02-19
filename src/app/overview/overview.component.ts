@@ -9,7 +9,7 @@ import {UserService} from '../_services';
     styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit, OnDestroy {
-    private tokenExpired: boolean = false;
+    public tokenExpired: boolean = false;
 
     private static tokenExpiredEventEmitter: EventEmitter<any> = new EventEmitter<any>();
 

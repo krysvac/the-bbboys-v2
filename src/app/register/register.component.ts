@@ -15,9 +15,9 @@ export class RegisterComponent implements OnInit {
     public registerForm: FormGroup;
     public registerError: boolean = false;
     public registerErrorMsg: string = '';
+    public validToken: boolean = false;
 
     private readonly token: string;
-    private validToken: boolean = false;
     private readonly passwordPattern: RegExp = new RegExp('^[a-zA-Z0-9åÅäÄöÖ!@#_.]+$');
     private readonly usernamePattern: RegExp = new RegExp('^[a-zA-Z0-9åÅäÄöÖ_]+$');
 
