@@ -8,8 +8,8 @@ import {Observable} from 'rxjs/internal/Observable';
 export class UserService {
   public httpOptions: Object = {
     headers: new HttpHeaders({
-        'Content-Type': 'application/json; charset=utf-8',
-      }
+      'Content-Type': 'application/json; charset=utf-8',
+    }
     ),
   };
   private readonly API_URL: string;
@@ -24,12 +24,12 @@ export class UserService {
 
   public auth(): Observable<any> {
     return this.http.get(this.API_URL + 'validateAuth', {
-        headers: new HttpHeaders({
-            'Content-Type': 'application/json; charset=utf-8',
-            'token': this.storage.retrieve('auth_token'),
-          }
-        ),
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token'),
       }
+      ),
+    }
     );
   }
 

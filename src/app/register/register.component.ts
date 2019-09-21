@@ -44,33 +44,33 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['overview/']);
     } else {
       this.api.validateToken({token: this.token}).subscribe(
-        () => {
-          this.validToken = true;
+          () => {
+            this.validToken = true;
 
-          this.registerForm = new FormGroup({
-            'username': new FormControl('', [
-              Validators.required,
-              Validators.minLength(2),
-              Validators.maxLength(32),
-              this.forbiddenUsernameValidator(this.usernamePattern),
-            ]),
-            'newPassword1': new FormControl('', [
-              Validators.required,
-              Validators.minLength(10),
-              Validators.maxLength(50),
-              this.forbiddenPasswordValidator(this.passwordPattern),
-            ]),
-            'newPassword2': new FormControl('', [
-              Validators.required,
-              Validators.minLength(10),
-              Validators.maxLength(50),
-              this.forbiddenPasswordValidator(this.passwordPattern),
-            ]),
-          }, SettingsComponent.passwordMatchValidator);
-        },
-        () => {
-          this.router.navigate(['overview/']);
-        }
+            this.registerForm = new FormGroup({
+              'username': new FormControl('', [
+                Validators.required,
+                Validators.minLength(2),
+                Validators.maxLength(32),
+                this.forbiddenUsernameValidator(this.usernamePattern),
+              ]),
+              'newPassword1': new FormControl('', [
+                Validators.required,
+                Validators.minLength(10),
+                Validators.maxLength(50),
+                this.forbiddenPasswordValidator(this.passwordPattern),
+              ]),
+              'newPassword2': new FormControl('', [
+                Validators.required,
+                Validators.minLength(10),
+                Validators.maxLength(50),
+                this.forbiddenPasswordValidator(this.passwordPattern),
+              ]),
+            }, SettingsComponent.passwordMatchValidator);
+          },
+          () => {
+            this.router.navigate(['overview/']);
+          }
       );
     }
   }
@@ -84,39 +84,39 @@ export class RegisterComponent implements OnInit {
       };
 
       this.api.registerUser(details).subscribe(
-        () => {
-          this.registerError = false;
-          const loginData: Object = {
-            username: this.username.value,
-            password: this.newPassword1.value,
-          };
-          this.user.login(loginData).subscribe(
-            (data) => {
-              const response = JSON.parse(JSON.stringify(data));
+          () => {
+            this.registerError = false;
+            const loginData: Object = {
+              username: this.username.value,
+              password: this.newPassword1.value,
+            };
+            this.user.login(loginData).subscribe(
+                (data) => {
+                  const response = JSON.parse(JSON.stringify(data));
 
-              this.user.setUserLoggedIn(details['username'], response['token'], response['admin']);
-              this.router.navigate(['overview/']);
-            }
-          );
-        },
-        (err) => {
-          this.registerError = true;
-          switch (err.error['status']) {
-            case '403_TOKEN_INVALID': {
-              this.validToken = false;
-              this.router.navigate(['overview/']);
-              break;
-            }
-            case '403_USERNAME_TAKEN': {
-              this.registerErrorMsg = 'Det valda användarnamnet är upptaget!';
-              break;
-            }
-            default: {
-              this.registerErrorMsg = 'Något gick fel. Försök igen!';
-              break;
+                  this.user.setUserLoggedIn(details['username'], response['token'], response['admin']);
+                  this.router.navigate(['overview/']);
+                }
+            );
+          },
+          (err) => {
+            this.registerError = true;
+            switch (err.error['status']) {
+              case '403_TOKEN_INVALID': {
+                this.validToken = false;
+                this.router.navigate(['overview/']);
+                break;
+              }
+              case '403_USERNAME_TAKEN': {
+                this.registerErrorMsg = 'Det valda användarnamnet är upptaget!';
+                break;
+              }
+              default: {
+                this.registerErrorMsg = 'Något gick fel. Försök igen!';
+                break;
+              }
             }
           }
-        }
       );
     }
   }

@@ -22,20 +22,20 @@ export class PollResultsComponent implements OnInit {
 
   ngOnInit() {
     PollComponent.getPollLoadedEventEmitter().subscribe(
-      (data) => {
-        this.choices = data;
-        this.initAnswers(this.choices);
-        this.choicesLoaded = true;
+        (data) => {
+          this.choices = data;
+          this.initAnswers(this.choices);
+          this.choicesLoaded = true;
 
-        this.loadAnswers();
-      }
+          this.loadAnswers();
+        }
     );
 
     PollComponent.getUserVotedEventEmitter().subscribe(
-      () => {
-        this.initAnswers(this.choices);
-        this.loadAnswers();
-      }
+        () => {
+          this.initAnswers(this.choices);
+          this.loadAnswers();
+        }
     );
   }
 
@@ -61,20 +61,20 @@ export class PollResultsComponent implements OnInit {
 
   private loadAnswers() {
     this.api.getAllAnswers().subscribe(
-      (data) => {
-        this.totalAmountOfAnswers = data.length;
+        (data) => {
+          this.totalAmountOfAnswers = data.length;
 
-        if (this.totalAmountOfAnswers > 0) {
-          this.countAnswerAmounts(data);
-        }
+          if (this.totalAmountOfAnswers > 0) {
+            this.countAnswerAmounts(data);
+          }
 
-        this.answersLoaded = true;
-      },
-      (err) => {
-        if (err.error['status'] === '401_EXPIRED') {
-          OverviewComponent.tokenExpiredEvent().emit(true);
+          this.answersLoaded = true;
+        },
+        (err) => {
+          if (err.error['status'] === '401_EXPIRED') {
+            OverviewComponent.tokenExpiredEvent().emit(true);
+          }
         }
-      }
     );
   }
 }

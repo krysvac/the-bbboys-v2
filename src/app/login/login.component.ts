@@ -51,25 +51,25 @@ export class LoginComponent implements OnInit {
     };
 
     this.user.login(details).subscribe(
-      (data) => {
-        const response = JSON.parse(JSON.stringify(data));
+        (data) => {
+          const response = JSON.parse(JSON.stringify(data));
 
-        this.user.setUserLoggedIn(details['username'], response['token'], response['admin']);
-        this.router.navigate(['overview/']);
-      },
-      (err) => {
-        this.loginError = true;
-        switch (err.error['status']) {
-          case '401_LOGIN': {
-            this.loginErrorMsg = 'Fel användarnamn eller lösenord!';
-            break;
-          }
-          default: {
-            this.loginErrorMsg = 'Ett oväntat fel har inträffat. Försök igen!';
-            break;
+          this.user.setUserLoggedIn(details['username'], response['token'], response['admin']);
+          this.router.navigate(['overview/']);
+        },
+        (err) => {
+          this.loginError = true;
+          switch (err.error['status']) {
+            case '401_LOGIN': {
+              this.loginErrorMsg = 'Fel användarnamn eller lösenord!';
+              break;
+            }
+            default: {
+              this.loginErrorMsg = 'Ett oväntat fel har inträffat. Försök igen!';
+              break;
+            }
           }
         }
-      }
     );
   }
 }

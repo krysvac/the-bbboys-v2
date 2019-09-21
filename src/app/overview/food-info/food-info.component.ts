@@ -23,20 +23,20 @@ export class FoodInfoComponent implements OnInit {
 
   ngOnInit() {
     this.api.getBistroJFood().subscribe(
-      (data) => {
-        this.bistroJ = data;
+        (data) => {
+          this.bistroJ = data;
 
-        this.toggleOpen('#bistroJ' + '5');
-        this.bistroJDone = true;
-      }
+          this.toggleOpen('#bistroJ' + '5');
+          this.bistroJDone = true;
+        }
     );
 
     this.api.getVillaFood().subscribe(
-      (data) => {
-        this.villa = data;
-        this.toggleOpen('#villa' + moment().isoWeekday().toString());
-        this.villaDone = true;
-      }
+        (data) => {
+          this.villa = data;
+          this.toggleOpen('#villa' + moment().isoWeekday().toString());
+          this.villaDone = true;
+        }
     );
   }
 

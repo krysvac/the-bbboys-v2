@@ -7,9 +7,8 @@
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
-        "lint": "eslint -c ./.eslintrc.json --max-warnings 0 './src/app/**'",
-        "lint:fix": "eslint -c ./.eslintrc.json --max-warnings 0 --fix './src/app/**'",
-        "lint:watch": "esw -w -c ./.eslintrc.json --max-warnings 0 './src/app/**'"
+        "lint": "eslint -c ./.eslintrc.json --max-warnings 0 './src/app/**.ts'",
+        "lint:watch": "esw -w -c ./.eslintrc.json --max-warnings 0 --color './src/app/**.ts'"
     },
     "private": true,
     "dependencies": {

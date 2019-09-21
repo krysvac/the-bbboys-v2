@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   }
 
   canActivate(next: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+      state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.userService.isLoggedIn()) {
       return this.userService.auth().pipe(map((res: Response) => {
         if (res !== null && res['token'] !== null && res['token'] !== '') {
@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
           return false;
         }
       })).pipe(
-        catchError(() => of(false, this.handleError()))
+          catchError(() => of(false, this.handleError()))
       );
     } else {
       this.userService.setUserLoggedOut();
