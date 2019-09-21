@@ -21,30 +21,30 @@ import {PollResultsComponent} from './overview/poll-results/poll-results.compone
 import {RegisterComponent} from './register/register.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        OverviewComponent,
-        NavbarComponent,
-        LoginComponent,
-        SettingsComponent,
-        PageNotFoundComponent,
-        LogoutComponent,
-        FoodInfoComponent,
-        PollComponent,
-        PollResultsComponent,
-        RegisterComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        NgxWebstorageModule.forRoot(),
-        NgbModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
-    providers: [UserService, StorageService, ApiService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    OverviewComponent,
+    NavbarComponent,
+    LoginComponent,
+    SettingsComponent,
+    PageNotFoundComponent,
+    LogoutComponent,
+    FoodInfoComponent,
+    PollComponent,
+    PollResultsComponent,
+    RegisterComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgxWebstorageModule.forRoot(),
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
+  providers: [UserService, StorageService, ApiService],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

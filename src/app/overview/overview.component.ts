@@ -4,37 +4,36 @@ import {environment} from '../../environments/environment';
 import {UserService} from '../_services';
 
 @Component({
-    selector: 'app-overview',
-    templateUrl: './overview.component.html',
-    styleUrls: ['./overview.component.scss']
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
-    public tokenExpired: boolean = false;
+  private static tokenExpiredEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  public tokenExpired: boolean = false;
 
-    private static tokenExpiredEventEmitter: EventEmitter<any> = new EventEmitter<any>();
+  constructor(private titleService: Title, private user: UserService) {
+    this.titleService.setTitle('Hem' + environment.title);
+  }
 
-    constructor(private titleService: Title, private user: UserService) {
-        this.titleService.setTitle('Hem' + environment.title);
-    }
+  public static tokenExpiredEvent(): EventEmitter<any> {
+    return this.tokenExpiredEventEmitter;
+  }
 
-    ngOnInit() {
-        OverviewComponent.tokenExpiredEvent().subscribe(
-            () => {
-                this.tokenExpired = true;
-                this.user.setUserLoggedOut();
-            }
-        );
-    }
+  ngOnInit() {
+    OverviewComponent.tokenExpiredEvent().subscribe(
+      () => {
+        this.tokenExpired = true;
+        this.user.setUserLoggedOut();
+      }
+    );
+  }
 
-    ngOnDestroy(): void {
-        this.tokenExpired = false;
-    }
+  ngOnDestroy(): void {
+    this.tokenExpired = false;
+  }
 
-    public dismissTokenExpired(): void {
-        this.tokenExpired = false;
-    }
-
-    public static tokenExpiredEvent(): EventEmitter<any> {
-        return this.tokenExpiredEventEmitter;
-    }
+  public dismissTokenExpired(): void {
+    this.tokenExpired = false;
+  }
 }

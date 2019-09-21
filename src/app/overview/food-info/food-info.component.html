@@ -1,10 +1,10 @@
 <h1 style="margin-top: 30px;">Maten för veckan, Vecka {{ getWeek() }}</h1>
 
-<div class="d-flex justify-content-center" *ngIf="!bistroJDone || !villaDone">
+<div *ngIf="!bistroJDone || !villaDone" class="d-flex justify-content-center">
     <div class="spinner-border text-primary loading-food">
     </div>
 </div>
-<div class="d-flex justify-content-center loading-food-info" *ngIf="!bistroJDone || !villaDone">
+<div *ngIf="!bistroJDone || !villaDone" class="d-flex justify-content-center loading-food-info">
     Laddar mat-information...
 </div>
 
@@ -19,18 +19,19 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr [ngClass]="{'activeDay': foodItemIsForToday(item.key)}"
-                    *ngFor="let item of villa | keyvalue ; index as index">
+                <tr *ngFor="let item of villa | keyvalue ; index as index"
+                    [ngClass]="{'activeDay': foodItemIsForToday(item.key)}">
                     <td class="cursor-point">
-                        <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#villa' + item.key)"
+                        <a (click)="toggleOpen('#villa' + item.key)" [attr.aria-controls]="'#villa' + item.key"
                            [attr.aria-expanded]="shouldBeOpen('#villa', item.key)"
-                           [attr.aria-controls]="'#villa' + item.key" role="button" data-toggle="collapse"
-                           [ngClass]="{'collapsed': !shouldBeOpen('#villa', item.key)}">
+                           [ngClass]="{'collapsed': !shouldBeOpen('#villa', item.key)}"
+                           class="dropdown-toggle" data-toggle="collapse" role="button"
+                           tabIndex="{{index}}">
                             {{translateDay(item.key)}}
                         </a>
                     </td>
                     <td>
-                        <div id="{{'#villa' + item.key}}" [ngbCollapse]="!shouldBeOpen('#villa', item.key)">
+                        <div [ngbCollapse]="!shouldBeOpen('#villa', item.key)" id="{{'#villa' + item.key}}">
                             <div>
                                 <table class="table table-hover table-bordered">
                                     <thead>
@@ -61,17 +62,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr [ngClass]="{'activeDay': foodItemIsForToday(item.key)}"
-                    *ngFor="let item of bistroJ | keyvalue ; index as index">
+                <tr *ngFor="let item of bistroJ | keyvalue ; index as index"
+                    [ngClass]="{'activeDay': foodItemIsForToday(item.key)}">
                     <td class="cursor-point">
-                        <a tabIndex="{{index}}" class="dropdown-toggle" (click)="toggleOpen('#bistroJ' + item.key)"
-                           [attr.aria-expanded]="!isCollapsed" [attr.aria-controls]="'#bistroJ' + item.key"
-                           role="button">
+                        <a (click)="toggleOpen('#bistroJ' + item.key)" [attr.aria-controls]="'#bistroJ' + item.key"
+                           [attr.aria-expanded]="!isCollapsed"
+                           class="dropdown-toggle" role="button"
+                           tabIndex="{{index}}">
                             {{translateDay(item.key)}}
                         </a>
                     </td>
                     <td>
-                        <div id="{{'#bistroJ' + item.key}}" [ngbCollapse]="!shouldBeOpen('#bistroJ', item.key)">
+                        <div [ngbCollapse]="!shouldBeOpen('#bistroJ', item.key)" id="{{'#bistroJ' + item.key}}">
                             <div>
                                 <table class="table table-hover table-bordered">
                                     <thead>

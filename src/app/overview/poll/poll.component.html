@@ -2,25 +2,26 @@
 <h2>Idag är det {{getDay()}}</h2>
 <h3 *ngIf="pollLoaded">{{pollWithChoices.poll.question}}</h3>
 <h3 *ngIf="pollLoaded && !user.isLoggedIn()"><a [routerLink]="['/login']">Logga in för att rösta</a></h3>
-<form *ngIf="user.isLoggedIn() && pollLoaded" (ngSubmit)="onSubmit()" [formGroup]="voteForm">
-    <div class="form-group" *ngFor="let choice of pollWithChoices.choices">
+<form (ngSubmit)="onSubmit()" *ngIf="user.isLoggedIn() && pollLoaded" [formGroup]="voteForm">
+    <div *ngFor="let choice of pollWithChoices.choices" class="form-group">
         <div class="custom-control custom-radio">
-            <input type="radio" id="{{'choice_' + choice.id}}" formControlName="choice" value="{{choice.id}}"
-                   class="custom-control-input" [checked]="choiceVotedFor === choice.id"
-                   [attr.disabled]="!votingIsAllowed || !canVoteToday ? 'true' : null">
+            <input [attr.disabled]="!votingIsAllowed || !canVoteToday ? 'true' : null"
+                   [checked]="choiceVotedFor === choice.id" class="custom-control-input" formControlName="choice"
+                   id="{{'choice_' + choice.id}}" type="radio"
+                   value="{{choice.id}}">
             <label class="custom-control-label" for="{{'choice_' + choice.id}}">{{choice.value}}</label>
         </div>
     </div>
 
-    <button type="submit" class="btn btn-primary" *ngIf="votingIsAllowed && canVoteToday">Rösta</button>
-    <button type="submit" class="btn btn-primary" *ngIf="votingIsAllowed && !canVoteToday" [disabled]="true">Redan
+    <button *ngIf="votingIsAllowed && canVoteToday" class="btn btn-primary" type="submit">Rösta</button>
+    <button *ngIf="votingIsAllowed && !canVoteToday" [disabled]="true" class="btn btn-primary" type="submit">Redan
         röstat
     </button>
-    <button type="submit" class="btn btn-primary" *ngIf="!votingIsAllowed" [disabled]="true">Röstning stängd
+    <button *ngIf="!votingIsAllowed" [disabled]="true" class="btn btn-primary" type="submit">Röstning stängd
     </button>
 </form>
 <br>
-<div class="alert alert-danger" *ngIf="voteError">{{voteErrorMsg}}</div>
+<div *ngIf="voteError" class="alert alert-danger">{{voteErrorMsg}}</div>
 
 <h4 *ngIf="pollLoaded && user.isLoggedIn()"
     [ngClass]="{'text-success': votingIsAllowed, 'text-danger': !votingIsAllowed}">Röstningen

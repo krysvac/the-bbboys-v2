@@ -1,5 +1,5 @@
 export interface Answer {
-    id: number,
-    poll_id: number,
-    choice_id: number
+  id: number,
+  poll_id: number,
+  choice_id: number
 }

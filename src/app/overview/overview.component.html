@@ -1,5 +1,5 @@
-<p id="tokenExpiredMsg" *ngIf="tokenExpired">
-    <ngb-alert [dismissible]="true" [type]="'danger'" (close)="dismissTokenExpired()">
+<p *ngIf="tokenExpired" id="tokenExpiredMsg">
+    <ngb-alert (close)="dismissTokenExpired()" [dismissible]="true" [type]="'danger'">
         Du har blivit utloggad på grund av inaktivitet. Var vänlig logga in igen!
     </ngb-alert>
 </p>

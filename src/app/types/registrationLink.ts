@@ -1,5 +1,5 @@
 export interface RegistrationLink {
-    token: string,
-    used: boolean,
-    timestamp: string
+  token: string,
+  used: boolean,
+  timestamp: string
 }

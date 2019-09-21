@@ -1,4 +1,4 @@
 export interface Poll {
-    id: number,
-    question: string
+  id: number,
+  question: string
 }

@@ -9,18 +9,18 @@ import {AuthGuard} from './auth/auth.guard';
 import {RegisterComponent} from './register/register.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/overview', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent},
-    {path: 'logout', component: LogoutComponent, canActivate: [AuthGuard]},
-    {path: 'overview', component: OverviewComponent},
-    {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
-    {path: 'register/:token', component: RegisterComponent},
-    {path: '**', component: PageNotFoundComponent}
+  {path: '', redirectTo: '/overview', pathMatch: 'full'},
+  {path: 'login', component: LoginComponent},
+  {path: 'logout', component: LogoutComponent, canActivate: [AuthGuard]},
+  {path: 'overview', component: OverviewComponent},
+  {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
+  {path: 'register/:token', component: RegisterComponent},
+  {path: '**', component: PageNotFoundComponent},
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

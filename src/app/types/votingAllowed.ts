@@ -1,3 +1,3 @@
 export interface VotingAllowed {
-    votingAllowed: boolean
+  votingAllowed: boolean
 }

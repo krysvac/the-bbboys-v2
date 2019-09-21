@@ -3,8 +3,8 @@
 <div *ngIf="choicesLoaded && answersLoaded && answers !== {}">
     <div *ngFor="let choice of choices">
         <div class="text-left">{{choice.value}} ({{answers[choice.id].percent | number: '1.0-2'}}%)</div>
-        <ngb-progressbar class="answerprogress" type="primary" [value]="answers[choice.id].amount"
-                         [max]="totalAmountOfAnswers"></ngb-progressbar>
+        <ngb-progressbar [max]="totalAmountOfAnswers" [value]="answers[choice.id].amount" class="answerprogress"
+                         type="primary"></ngb-progressbar>
         <br>
     </div>
 </div>
@@ -12,7 +12,7 @@
 <div *ngIf="choicesLoaded && answersLoaded && answers === {}">
     <div *ngFor="let choice of choices">
         <div class="text-left">{{choice.value}} (0 %)</div>
-        <ngb-progressbar class="answerprogress" type="primary" [value]="0" [max]="0"></ngb-progressbar>
+        <ngb-progressbar [max]="0" [value]="0" class="answerprogress" type="primary"></ngb-progressbar>
         <br>
     </div>
 </div>

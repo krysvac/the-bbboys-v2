@@ -1,15 +1,15 @@
 <h1 style="margin-top: 30px;">Registrera konto</h1>
 
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" *ngIf="validToken">
+<form (ngSubmit)="onSubmit()" *ngIf="validToken" [formGroup]="registerForm">
     <div class="form-group">
         <label for="username">Användarnamn</label>
-        <input type="text" class="form-control" id="username" formControlName="username"
-               placeholder="Sick_Steve_69" required aria-describedby="usernameHelpBlock">
-        <small id="usernameHelpBlock" class="form-text text-muted">
+        <input aria-describedby="usernameHelpBlock" class="form-control" formControlName="username" id="username"
+               placeholder="Sick_Steve_69" required type="text">
+        <small class="form-text text-muted" id="usernameHelpBlock">
             Ditt användarnamn måste vara mellan 2-32 tecken långt och får bara innehålla A-Ö 0-9 _
         </small>
         <br *ngIf="username.invalid && (username.dirty || username.touched)">
-        <div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+        <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
             <div *ngIf="username.errors.required">
                 Ett användarnamn krävs!
             </div>
@@ -27,13 +27,14 @@
     </div>
     <div class="form-group">
         <label for="newPassword1">Nytt lösenord</label>
-        <input type="password" class="form-control" id="newPassword1" formControlName="newPassword1"
-               placeholder="*********" required aria-describedby="passwordHelpBlock">
-        <small id="passwordHelpBlock" class="form-text text-muted">
+        <input aria-describedby="passwordHelpBlock" class="form-control" formControlName="newPassword1"
+               id="newPassword1"
+               placeholder="*********" required type="password">
+        <small class="form-text text-muted" id="passwordHelpBlock">
             Ditt lösenord måste vara mellan 10-50 tecken långt och får bara innehålla A-Ö 0-9 ! @ # _ .
         </small>
         <br *ngIf="newPassword1.invalid && (newPassword1.dirty || newPassword1.touched)">
-        <div class="alert alert-danger" *ngIf="newPassword1.invalid && (newPassword1.dirty || newPassword1.touched)">
+        <div *ngIf="newPassword1.invalid && (newPassword1.dirty || newPassword1.touched)" class="alert alert-danger">
             <div *ngIf="newPassword1.errors.required">
                 Ett lösenord krävs!
             </div>
@@ -51,10 +52,10 @@
     </div>
     <div class="form-group">
         <label for="newPassword2">Upprepa nytt lösenord</label>
-        <input type="password" class="form-control" id="newPassword2" formControlName="newPassword2"
-               placeholder="*********" required>
+        <input class="form-control" formControlName="newPassword2" id="newPassword2" placeholder="*********"
+               required type="password">
         <br *ngIf="newPassword2.invalid && (newPassword2.dirty || newPassword2.touched)">
-        <div class="alert alert-danger" *ngIf="newPassword2.invalid && (newPassword2.dirty || newPassword2.touched)">
+        <div *ngIf="newPassword2.invalid && (newPassword2.dirty || newPassword2.touched)" class="alert alert-danger">
             <div *ngIf="newPassword2.errors.required">
                 Ett lösenord krävs!
             </div>
@@ -70,13 +71,13 @@
             </div>
         </div>
     </div>
-    <div class="alert alert-danger" *ngIf="registerForm.invalid && newPassword1.valid && newPassword2.valid">
+    <div *ngIf="registerForm.invalid && newPassword1.valid && newPassword2.valid" class="alert alert-danger">
       <span *ngIf="registerForm.errors.mismatch">
           Ditt nya lösenord matchar inte i båda fälten!
       </span>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]=" registerForm.invalid">Skapa konto</button>
+    <button [disabled]=" registerForm.invalid" class="btn btn-primary" type="submit">Skapa konto</button>
     <br *ngIf="registerError">
     <br *ngIf="registerError">
-    <div class="alert alert-danger" *ngIf="registerError">{{registerErrorMsg}}</div>
+    <div *ngIf="registerError" class="alert alert-danger">{{registerErrorMsg}}</div>
 </form>

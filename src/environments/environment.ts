@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false,
-    title: ' | The BBBoys mat-info',
-    navbarTitle: 'The BBBoys',
-    apiUrl: 'http://localhost:6969'
+  production: false,
+  title: ' | The BBBoys mat-info',
+  navbarTitle: 'The BBBoys',
+  apiUrl: 'http://localhost:6969'
 };
 
 /*
