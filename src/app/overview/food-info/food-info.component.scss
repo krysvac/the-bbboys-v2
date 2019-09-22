@@ -11,3 +11,10 @@
 .cursor-point {
     cursor: pointer;
 }
+
+tr, td {
+    outline: none;
+    & > a {
+        outline: none;
+    }
+}
