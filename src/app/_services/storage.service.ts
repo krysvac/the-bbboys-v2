@@ -19,10 +19,6 @@ export class StorageService {
     }
   }
 
-  public clear(key: string): void {
-    this.storage.clear(key);
-  }
-
   public clearAll(): void {
     this.storage.clear();
   }

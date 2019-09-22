@@ -10,7 +10,7 @@ describe('FoodInfoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [FoodInfoComponent],
     })
-      .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {

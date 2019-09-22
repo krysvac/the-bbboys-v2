@@ -22,10 +22,10 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     OverviewComponent.tokenExpiredEvent().subscribe(
-      () => {
-        this.tokenExpired = true;
-        this.user.setUserLoggedOut();
-      }
+        () => {
+          this.tokenExpired = true;
+          this.user.setUserLoggedOut();
+        }
     );
   }
 

@@ -4,8 +4,8 @@
         "es6": true
     },
     "extends": [
-        "google",
-        "eslint:recommended"
+        "eslint:recommended",
+        "google"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -14,7 +14,8 @@
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "@typescript-eslint"
@@ -24,17 +25,20 @@
         "new-cap": "off",
         "require-jsdoc": "off",
         "max-len": "off",
-        "no-magic-numbers": "error",
         "no-multiple-empty-lines": [
             "error",
             {
                 "max": 1
             }
-        ]
+        ],
+        "no-explicit-any": "off",
+        "camelcase": "off"
     },
     "overrides": [
         {
-            "files": ["**/**.spec.ts"],
+            "files": [
+                "**/**.spec.ts"
+            ],
             "rules": {
                 "no-undef": "off"
             }

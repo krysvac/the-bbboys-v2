@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Choice} from '../../types';
 import {ApiService} from '../../_services';
 import {PollComponent} from '../poll/poll.component';
 import {Answer} from '../../types/answer';
 import {OverviewComponent} from '../overview.component';
+import {Choice, ChoiceAnswerAmount} from '../../types';
 
 @Component({
   selector: 'app-poll-results',
@@ -12,7 +12,7 @@ import {OverviewComponent} from '../overview.component';
 })
 export class PollResultsComponent implements OnInit {
   public choices: Choice[];
-  public answers: Object = {};
+  public answers: ChoiceAnswerAmount[] = [];
   public totalAmountOfAnswers: number;
   public choicesLoaded: boolean = false;
   public answersLoaded: boolean = false;

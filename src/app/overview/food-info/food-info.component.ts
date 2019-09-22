@@ -3,7 +3,6 @@ import * as moment from 'moment';
 import {Food} from '../../types';
 import {ApiService} from '../../_services';
 
-
 @Component({
   selector: 'app-food-info',
   templateUrl: './food-info.component.html',
@@ -25,8 +24,7 @@ export class FoodInfoComponent implements OnInit {
     this.api.getBistroJFood().subscribe(
         (data) => {
           this.bistroJ = data;
-
-          this.toggleOpen('#bistroJ' + '5');
+          this.toggleOpen('#bistroJ' + moment().isoWeekday().toString());
           this.bistroJDone = true;
         }
     );
@@ -45,7 +43,7 @@ export class FoodInfoComponent implements OnInit {
   }
 
   public foodItemIsForToday(key: string): boolean {
-    return key === '5';
+    return key === moment().isoWeekday().toString();
   }
 
   public translateDay(day: string): string {

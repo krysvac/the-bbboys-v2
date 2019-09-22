@@ -5,7 +5,6 @@ import {Choice, PollWithChoices} from '../../types';
 import {ApiService, StorageService, UserService} from '../../_services';
 import {OverviewComponent} from '../overview.component';
 
-
 @Component({
   selector: 'app-poll',
   templateUrl: './poll.component.html',
