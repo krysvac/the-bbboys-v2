@@ -8,7 +8,7 @@ import {Choice, ChoiceAnswerAmount} from '../../types';
 @Component({
   selector: 'app-poll-results',
   templateUrl: './poll-results.component.html',
-  styleUrls: ['./poll-results.component.scss'],
+  styleUrls: ['./poll-results.component.scss']
 })
 export class PollResultsComponent implements OnInit {
   public choices: Choice[];
@@ -43,7 +43,7 @@ export class PollResultsComponent implements OnInit {
     for (const choice of choices) {
       this.answers[choice.id] = {
         amount: 0,
-        percent: 0,
+        percent: 0
       };
     }
   }
@@ -54,7 +54,7 @@ export class PollResultsComponent implements OnInit {
     }
 
     for (const answer of answers) {
-      const percent = this.answers[answer.choice_id].amount / this.totalAmountOfAnswers;
+      const percent: number = this.answers[answer.choice_id].amount / this.totalAmountOfAnswers;
       this.answers[answer.choice_id].percent = percent * 100;
     }
   }

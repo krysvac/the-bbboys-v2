@@ -5,3 +5,5 @@ export * from './food';
 export * from './votingAllowed';
 export * from './canVote';
 export * from './choiceAnswerAmount';
+export * from './searchResult';
+export * from './searchModel';

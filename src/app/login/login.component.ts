@@ -8,7 +8,7 @@ import {Title} from '@angular/platform-browser';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
@@ -19,11 +19,11 @@ export class LoginComponent implements OnInit {
     this.titleService.setTitle('Logga in' + environment.title);
   }
 
-  get username(): AbstractControl {
+  public get username(): AbstractControl {
     return this.loginForm.get('username');
   }
 
-  get password(): AbstractControl {
+  public get password(): AbstractControl {
     return this.loginForm.get('password');
   }
 
@@ -34,25 +34,25 @@ export class LoginComponent implements OnInit {
       this.loginForm = new FormGroup({
         'username': new FormControl('', [
           Validators.required,
-          Validators.maxLength(50),
+          Validators.maxLength(50)
         ]),
         'password': new FormControl('', [
           Validators.required,
-          Validators.maxLength(50),
-        ]),
+          Validators.maxLength(50)
+        ])
       });
     }
   }
 
   public onSubmit(): void {
-    const details = <Object>{
+    const details: Object = <Object>{
       username: this.username.value,
-      password: this.password.value,
+      password: this.password.value
     };
 
     this.user.login(details).subscribe(
         (data) => {
-          const response = JSON.parse(JSON.stringify(data));
+          const response: any[] = JSON.parse(JSON.stringify(data));
 
           this.user.setUserLoggedIn(details['username'], response['token'], response['admin']);
           this.router.navigate(['overview/']);

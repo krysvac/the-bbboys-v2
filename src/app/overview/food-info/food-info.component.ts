@@ -6,7 +6,7 @@ import {ApiService} from '../../_services';
 @Component({
   selector: 'app-food-info',
   templateUrl: './food-info.component.html',
-  styleUrls: ['./food-info.component.scss'],
+  styleUrls: ['./food-info.component.scss']
 })
 export class FoodInfoComponent implements OnInit {
   public bistroJ: Food;

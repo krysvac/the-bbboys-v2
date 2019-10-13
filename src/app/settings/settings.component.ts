@@ -8,7 +8,7 @@ import {RegistrationLink} from '../types/registrationLink';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
+  styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
   public createRegisterLinkError: boolean = false;
@@ -34,34 +34,34 @@ export class SettingsComponent implements OnInit {
         {
           oldPassword: new FormControl('', [
             Validators.required,
-            Validators.maxLength(50),
+            Validators.maxLength(50)
           ]),
           newPassword1: new FormControl('', [
             Validators.required,
             Validators.minLength(10),
             Validators.maxLength(50),
-            this.forbiddenPasswordValidator(this.passwordPattern),
+            this.forbiddenPasswordValidator(this.passwordPattern)
           ]),
           newPassword2: new FormControl('', [
             Validators.required,
             Validators.minLength(10),
             Validators.maxLength(50),
-            this.forbiddenPasswordValidator(this.passwordPattern),
-          ]),
+            this.forbiddenPasswordValidator(this.passwordPattern)
+          ])
         },
         SettingsComponent.passwordMatchValidator
     );
   }
 
-  get oldPassword(): AbstractControl {
+  public get oldPassword(): AbstractControl {
     return this.changePasswordForm.get('oldPassword');
   }
 
-  get newPassword1(): AbstractControl {
+  public get newPassword1(): AbstractControl {
     return this.changePasswordForm.get('newPassword1');
   }
 
-  get newPassword2(): AbstractControl {
+  public get newPassword2(): AbstractControl {
     return this.changePasswordForm.get('newPassword2');
   }
 
@@ -79,7 +79,7 @@ export class SettingsComponent implements OnInit {
     if (this.changePasswordForm.status === 'VALID') {
       const details: Object = {
         oldPassword: this.oldPassword.value,
-        newPassword: this.newPassword1.value,
+        newPassword: this.newPassword1.value
       };
 
       this.api.changePassword(details).subscribe(
@@ -121,9 +121,9 @@ export class SettingsComponent implements OnInit {
   }
 
   public copyRegisterLink(token: string): void {
-    const link = window.location.origin + '/register/' + token;
+    const link: string = window.location.origin + '/register/' + token;
 
-    const selBox = document.createElement('textarea');
+    const selBox: HTMLTextAreaElement = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
@@ -148,7 +148,7 @@ export class SettingsComponent implements OnInit {
 
   private forbiddenPasswordValidator(pattern: RegExp): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-      const forbidden = pattern.test(control.value);
+      const forbidden: boolean = pattern.test(control.value);
       return !forbidden ?
         {forbiddenPassword: {value: control.value}} :
         null;
@@ -157,7 +157,7 @@ export class SettingsComponent implements OnInit {
 
   private showSnackbar(message: string) {
     this.snackbarMessage = message;
-    const x = document.getElementById('snackbar');
+    const x: HTMLElement = document.getElementById('snackbar');
     x.className = 'show';
     setTimeout(function() {
       x.className = x.className.replace('show', '');

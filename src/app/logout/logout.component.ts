@@ -7,7 +7,7 @@ import {Title} from '@angular/platform-browser';
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
-  styleUrls: ['./logout.component.scss'],
+  styleUrls: ['./logout.component.scss']
 })
 export class LogoutComponent implements OnInit {
   constructor(private user: UserService, private router: Router, private titleService: Title) {

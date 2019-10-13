@@ -1,10 +1,10 @@
 <h1 style="margin-top: 30px;">Maten för veckan, Vecka {{ getWeek() }}</h1>
 
 <div *ngIf="!bistroJDone || !villaDone" class="d-flex justify-content-center">
-    <div class="spinner-border text-primary loading-food">
+    <div class="spinner-border text-primary loading-spinner">
     </div>
 </div>
-<div *ngIf="!bistroJDone || !villaDone" class="d-flex justify-content-center loading-food-info">
+<div *ngIf="!bistroJDone || !villaDone" class="d-flex justify-content-center loading-spinner-info">
     Laddar mat-information...
 </div>
 
@@ -66,7 +66,7 @@
                     [ngClass]="{'activeDay': foodItemIsForToday(item.key)}">
                     <td class="cursor-point">
                         <a (click)="toggleOpen('#bistroJ' + item.key)" [attr.aria-controls]="'#bistroJ' + item.key"
-                           [attr.aria-expanded]="!isCollapsed"
+                           [attr.aria-expanded]="shouldBeOpen('#villa', item.key)"
                            class="dropdown-toggle" role="button"
                            tabIndex="{{index}}">
                             {{translateDay(item.key)}}

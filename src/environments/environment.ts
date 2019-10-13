@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   title: ' | The BBBoys mat-info',
   navbarTitle: 'The BBBoys',
-  apiUrl: 'http://localhost:6969'
+  apiUrl: 'http://localhost:6969',
+  movieDbApiUrl: 'https://api.themoviedb.org/3',
+  movieDbApiKey: 'f4ccaa876b8492d5776240c4f93a6a0f'
 };
 
 /*

@@ -8,7 +8,7 @@ describe('FoodInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FoodInfoComponent],
+      declarations: [FoodInfoComponent]
     })
         .compileComponents();
   }));

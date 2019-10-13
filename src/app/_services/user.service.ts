@@ -8,9 +8,8 @@ import {Observable} from 'rxjs/internal/Observable';
 export class UserService {
   public httpOptions: Object = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8',
-    }
-    ),
+      'Content-Type': 'application/json; charset=utf-8'
+    })
   };
   private readonly API_URL: string;
 
@@ -26,11 +25,9 @@ export class UserService {
     return this.http.get(this.API_URL + 'validateAuth', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=utf-8',
-        'token': this.storage.retrieve('auth_token'),
-      }
-      ),
-    }
-    );
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
   }
 
   public setUserLoggedIn(username: string, token: string, admin: boolean): void {

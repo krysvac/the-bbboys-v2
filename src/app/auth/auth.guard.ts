@@ -5,13 +5,13 @@ import {Observable, of} from 'rxjs';
 import {StorageService, UserService} from '../_services';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
   constructor(private userService: UserService, private storage: StorageService, private router: Router) {
   }
 
-  canActivate(next: ActivatedRouteSnapshot,
+  public canActivate(next: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.userService.isLoggedIn()) {
       return this.userService.auth().pipe(map((res: Response) => {
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate {
     }
   }
 
-  private handleError() {
+  private handleError(): boolean {
     this.userService.setUserLoggedOut();
     this.router.navigate(['login/']);
     return false;

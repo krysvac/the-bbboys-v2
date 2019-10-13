@@ -6,7 +6,7 @@ import {UserService} from '../_services';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
+  styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit, OnDestroy {
   private static tokenExpiredEventEmitter: EventEmitter<any> = new EventEmitter<any>();

@@ -17,6 +17,25 @@
     height: 250px;
 }
 
+.bg-spook {
+    background-image: url("assets/images/bg_spook.jpg");
+    background-size: contain;
+    background-repeat-x: no-repeat;
+    background-repeat-y: repeat;
+}
+
+.top-spook {
+    background-color: #cccccc;
+    background-image: url("assets/images/top_spook.jpeg");
+    height: 168px;
+}
+
+.bottom-spook {
+    background-color: #cccccc;
+    background-image: url("assets/images/bottom_spook.jpeg");
+    height: 196px;
+}
+
 .main {
     background-color: white;
     min-height: 1000px;
@@ -162,5 +181,15 @@
     .custom-control-label::before {
         background-color: #dee2e6;
         border: none;
+    }
+}
+
+.loading-spinner {
+    width: 100px!important;
+    height: 100px!important;
+    font-size: 18px!important;
+
+    &-info {
+        font-size: 26px!important;
     }
 }

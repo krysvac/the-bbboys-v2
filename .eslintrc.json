@@ -32,7 +32,40 @@
             }
         ],
         "no-explicit-any": "off",
-        "camelcase": "off"
+        "camelcase": "off",
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "@typescript-eslint/explicit-member-accessibility": [
+            "error",
+            {
+                "overrides": {
+                    "constructors": "off"
+                },
+                "ignoredMethodNames": [
+                    "ngOnChanges",
+                    "ngOnInit",
+                    "ngDoCheck",
+                    "ngAfterContentInit",
+                    "ngAfterContentChecked",
+                    "ngAfterViewInit",
+                    "ngAfterViewChecked",
+                    "ngOnDestroy",
+                    "ngDoBootstrap"
+                ]
+            }
+        ],
+        "@typescript-eslint/typedef": [
+            "error",
+            {
+                "arrowParameter": false,
+                "memberVariableDeclaration": true,
+                "parameter": true,
+                "propertyDeclaration": true,
+                "variableDeclaration": true
+            }
+        ]
     },
     "overrides": [
         {

@@ -8,7 +8,7 @@ import {OverviewComponent} from '../overview.component';
 @Component({
   selector: 'app-poll',
   templateUrl: './poll.component.html',
-  styleUrls: ['./poll.component.scss'],
+  styleUrls: ['./poll.component.scss']
 })
 export class PollComponent implements OnInit {
   private static pollLoadedEvent: EventEmitter<Choice[]> = new EventEmitter<Choice[]>();
@@ -25,7 +25,7 @@ export class PollComponent implements OnInit {
   constructor(public user: UserService, private api: ApiService, private storage: StorageService) {
   }
 
-  get choice(): AbstractControl {
+  public get choice(): AbstractControl {
     return this.voteForm.get('choice');
   }
 
@@ -106,9 +106,9 @@ export class PollComponent implements OnInit {
 
     this.voteForm = new FormGroup({
       'choice': new FormControl('', [
-        Validators.required,
+        Validators.required
       ]
-      ),
+      )
     });
   }
 
@@ -117,9 +117,9 @@ export class PollComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const details = <Object>{
+    const details: Object = <Object>{
       poll_id: this.pollWithChoices.poll.id,
-      choice_id: this.choice.value,
+      choice_id: this.choice.value
     };
 
     this.api.vote(details).subscribe(

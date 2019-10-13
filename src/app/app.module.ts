@@ -19,6 +19,10 @@ import {FoodInfoComponent} from './overview/food-info/food-info.component';
 import {PollComponent} from './overview/poll/poll.component';
 import {PollResultsComponent} from './overview/poll-results/poll-results.component';
 import {RegisterComponent} from './register/register.component';
+import {WeebVoteComponent} from './weeb';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import {RegisterComponent} from './register/register.component';
     PollComponent,
     PollResultsComponent,
     RegisterComponent,
+    WeebVoteComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +47,12 @@ import {RegisterComponent} from './register/register.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule,
+    NgxDatatableModule
   ],
   providers: [UserService, StorageService, ApiService],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

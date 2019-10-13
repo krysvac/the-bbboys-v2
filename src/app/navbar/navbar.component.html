@@ -9,6 +9,9 @@
                 <a [routerLink]="['/overview']" class="nav-link">Hem</a>
             </li>
             <li *ngIf="user.isLoggedIn()" class="nav-item" routerLinkActive="active">
+                <a [routerLink]="['/weebvote']" class="nav-link">Weeb-vote</a>
+            </li>
+            <li *ngIf="user.isLoggedIn()" class="nav-item" routerLinkActive="active">
                 <a [routerLink]="['/settings']" class="nav-link">Inställningar</a>
             </li>
             <li *ngIf="user.isLoggedIn()" class="nav-item" routerLinkActive="active">

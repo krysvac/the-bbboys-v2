@@ -11,7 +11,7 @@ export class StorageService {
   }
 
   public retrieve(key: string): string {
-    const value = this.storage.retrieve(key);
+    const value: string | null = this.storage.retrieve(key);
     if (value === null) {
       return '';
     } else {

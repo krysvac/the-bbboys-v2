@@ -9,7 +9,7 @@ import {SettingsComponent} from '../settings/settings.component';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
@@ -27,15 +27,15 @@ export class RegisterComponent implements OnInit {
     this.titleService.setTitle('Registrera konto' + environment.title);
   }
 
-  get username(): AbstractControl {
+  public get username(): AbstractControl {
     return this.registerForm.get('username');
   }
 
-  get newPassword1(): AbstractControl {
+  public get newPassword1(): AbstractControl {
     return this.registerForm.get('newPassword1');
   }
 
-  get newPassword2(): AbstractControl {
+  public get newPassword2(): AbstractControl {
     return this.registerForm.get('newPassword2');
   }
 
@@ -52,20 +52,20 @@ export class RegisterComponent implements OnInit {
                 Validators.required,
                 Validators.minLength(2),
                 Validators.maxLength(32),
-                this.forbiddenUsernameValidator(this.usernamePattern),
+                this.forbiddenUsernameValidator(this.usernamePattern)
               ]),
               'newPassword1': new FormControl('', [
                 Validators.required,
                 Validators.minLength(10),
                 Validators.maxLength(50),
-                this.forbiddenPasswordValidator(this.passwordPattern),
+                this.forbiddenPasswordValidator(this.passwordPattern)
               ]),
               'newPassword2': new FormControl('', [
                 Validators.required,
                 Validators.minLength(10),
                 Validators.maxLength(50),
-                this.forbiddenPasswordValidator(this.passwordPattern),
-              ]),
+                this.forbiddenPasswordValidator(this.passwordPattern)
+              ])
             }, SettingsComponent.passwordMatchValidator);
           },
           () => {
@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
       const details: Object = {
         username: this.username.value,
         password: this.newPassword1.value,
-        token: this.token,
+        token: this.token
       };
 
       this.api.registerUser(details).subscribe(
@@ -88,11 +88,11 @@ export class RegisterComponent implements OnInit {
             this.registerError = false;
             const loginData: Object = {
               username: this.username.value,
-              password: this.newPassword1.value,
+              password: this.newPassword1.value
             };
             this.user.login(loginData).subscribe(
                 (data) => {
-                  const response = JSON.parse(JSON.stringify(data));
+                  const response: any[] = JSON.parse(JSON.stringify(data));
 
                   this.user.setUserLoggedIn(details['username'], response['token'], response['admin']);
                   this.router.navigate(['overview/']);
@@ -123,14 +123,14 @@ export class RegisterComponent implements OnInit {
 
   private forbiddenPasswordValidator(pattern: RegExp): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-      const forbidden = pattern.test(control.value);
+      const forbidden: boolean = pattern.test(control.value);
       return !forbidden ? {'forbiddenPassword': {value: control.value}} : null;
     };
   }
 
   private forbiddenUsernameValidator(pattern: RegExp): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-      const forbidden = pattern.test(control.value);
+      const forbidden: boolean = pattern.test(control.value);
       return !forbidden ? {'forbiddenUsername': {value: control.value}} : null;
     };
   }
