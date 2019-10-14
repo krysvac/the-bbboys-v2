@@ -20,7 +20,7 @@ export class FoodInfoComponent implements OnInit {
   constructor(private api: ApiService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.api.getBistroJFood().subscribe(
         (data) => {
           this.bistroJ = data;

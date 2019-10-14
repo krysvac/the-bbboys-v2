@@ -65,7 +65,8 @@
                 "propertyDeclaration": true,
                 "variableDeclaration": true
             }
-        ]
+        ],
+        "@typescript-eslint/explicit-function-return-type": ["error"]
     },
     "overrides": [
         {

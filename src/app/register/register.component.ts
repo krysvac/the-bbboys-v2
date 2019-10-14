@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('newPassword2');
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.user.isLoggedIn()) {
       this.router.navigate(['overview/']);
     } else {

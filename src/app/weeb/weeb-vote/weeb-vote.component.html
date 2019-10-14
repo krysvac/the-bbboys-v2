@@ -1,111 +1,27 @@
 <h1 style="margin-top: 30px;">Weeb-vote</h1>
-<ng-container *ngIf="imageBaseUrl">
-    <hr>
-    <h2 style="margin-top: 30px;">Sök</h2>
-    <form (ngSubmit)="onSubmit(model)" [formGroup]="addChoiceForm">
-        <formly-form [form]="addChoiceForm" [fields]="fields" [model]="model"></formly-form>
-        <button type="submit" class="btn btn-primary" [disabled]="!addChoiceForm.valid">Sök</button>
+<h2>Rösta</h2>
+<ng-container *ngIf="!loading">
+    <form (ngSubmit)="onSubmit(model)" [formGroup]="weebVoteForm">
+        <formly-form *ngIf="hasChoices" [form]="weebVoteForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
+        <ng-container *ngIf="!hasChoices">
+            <div class="text-center" style="font-size: 26px">Inga alternativ tillagda...</div>
+        </ng-container>
+        <button type="submit" class="btn btn-primary" *ngIf="hasChoices" [disabled]="!weebVoteForm.valid || !votingAllowed || submitDisabled()">{{ votingAllowed ? 'Rösta' : 'Röstning stängd' }}</button>
     </form>
-    <div *ngIf="isSearching" class="d-flex justify-content-center">
-        <div class="spinner-border text-primary loading-spinner">
-        </div>
-    </div>
-    <div *ngIf="isSearching" class="d-flex justify-content-center loading-spinner-info">
-        Laddar sökresultat...
-    </div>
-    <div *ngIf="!isSearching && searchResultsMovies && searchResultsMovies.total_results === 0"
-         class="d-flex justify-content-center loading-spinner-info">
-        Inga resultat kunde hittas för {{searchedModel.searchTerm}}
-    </div>
-
-    <ng-container *ngIf="!isSearching && searchedModel">
-        <ng-container
-            *ngIf="searchedModel.searchType === SearchModelType.Movie && searchResultsMovies && searchResultsMovies.total_results > 0">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-item-movie" *ngFor="let result of searchResultsMovies.results">
-                        <div class="row">
-                            <div class="col-2" *ngIf="result.poster_path">
-                                <a href="https://www.themoviedb.org/movie/{{result.id}}" target="_blank">
-                                    <img class="movie-poster"
-                                         [src]="imageBaseUrl + 'original' + result.poster_path"
-                                         [alt]="result.title">
-                                </a>
-                            </div>
-                            <div class="col-2 no-image" *ngIf="!result.poster_path">
-                                Ingen bild tillgänglig
-                            </div>
-                            <div class="col-10">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h2 class="movie-title">
-                                            {{result.title}} <span class="year">({{getYear(result.release_date)}}
-                                            )</span>
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="row" style="overflow-wrap: break-word;">
-                                    <div class="col-12 description">
-                                        {{result.overview}}
-                                    </div>
-                                </div>
-                                <div class="add-button">
-                                    <button class="btn btn-primary" (click)="addItem(result.id)">
-                                        Lägg till
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-        <ng-container
-            *ngIf="searchedModel.searchType === SearchModelType.TVShow && searchResultsTv && searchResultsTv.total_results > 0">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-item-movie" *ngFor="let result of searchResultsTv.results">
-                        <div class="row">
-                            <div class="col-2" *ngIf="result.poster_path">
-                                <a href="https://www.themoviedb.org/movie/{{result.id}}" target="_blank">
-                                    <img class="movie-poster"
-                                         [src]="imageBaseUrl + 'original' + result.poster_path"
-                                         [alt]="result.name">
-                                </a>
-                            </div>
-                            <div class="col-2 no-image" *ngIf="!result.poster_path">
-                                Ingen bild tillgänglig
-                            </div>
-                            <div class="col-10">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h2 class="movie-title">
-                                            {{result.name}} <span class="year">({{getYear(result.first_air_date)}}
-                                            )</span>
-                                        </h2>
-                                    </div>
-                                </div>
-                                <div class="row" style="overflow-wrap: break-word;">
-                                    <div class="col-12 description">
-                                        {{result.overview}}
-                                    </div>
-                                </div>
-                                <div class="add-button">
-                                    <button class="btn btn-primary" (click)="addItem(result.id)">
-                                        Lägg till
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-    </ng-container>
+    <h4 [ngClass]="{'text-success': votingAllowed, 'text-danger': !votingAllowed}">
+        Röstningen är {{votingAllowed ? 'öppen tills fredag 23:59:59!' : 'stängd för veckan!'}}
+    </h4>
+    <hr>
+    <div id="snackbar">{{snackbarMessage}}</div>
 </ng-container>
-<ng-container *ngIf="!imageBaseUrl">
+<ng-container *ngIf="loading">
     <div class="d-flex justify-content-center">
         <div class="spinner-border text-primary loading-spinner">
         </div>
     </div>
+    <div class="d-flex justify-content-center loading-spinner-info">
+        Laddar alternativ...
+    </div>
 </ng-container>
+
+<app-weeb-results></app-weeb-results>

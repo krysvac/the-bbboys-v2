@@ -20,7 +20,7 @@ export class PollResultsComponent implements OnInit {
   constructor(private api: ApiService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     PollComponent.getPollLoadedEventEmitter().subscribe(
         (data) => {
           this.choices = data;
@@ -59,7 +59,7 @@ export class PollResultsComponent implements OnInit {
     }
   }
 
-  private loadAnswers() {
+  private loadAnswers(): void {
     this.api.getAllAnswers().subscribe(
         (data) => {
           this.totalAmountOfAnswers = data.length;

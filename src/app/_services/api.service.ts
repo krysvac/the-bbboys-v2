@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {StorageService} from './storage.service';
-import {CanVote, Food, PollWithChoices, SearchResponse, SearchResultMovie, SearchResultTv, VotingAllowed} from '../types';
+import {CanVote, Choice, Food, PollWithChoices, SearchResponse, SearchResultMovie, SearchResultTv, VotingAllowed} from '../types';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/internal/Observable';
-import {Answer} from '../types/answer';
+import {Answer, WeebAnswer} from '../types/answer';
 import {UserService} from './user.service';
 import {RegistrationLink} from '../types/registrationLink';
 
@@ -71,7 +71,6 @@ export class ApiService {
   }
 
   public vote(obj: Object): Observable<any> {
-    this.addAuthToken(this.httpOptions.headers);
     return this.http.post(this.API_URL + 'vote', JSON.stringify(obj), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json; charset=utf-8',
@@ -147,15 +146,61 @@ export class ApiService {
     });
   }
 
+  public getWeebChoices(): Observable<Choice[]> {
+    return this.http.get<Choice[]>(this.API_URL + 'currentWeebChoices', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
+  }
+
+  public addWeebChoice(obj: Object): Observable<any> {
+    return this.http.post(this.API_URL + 'addWeebChoice', JSON.stringify(obj), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
+  }
+
+  public getWeebVotingAllowed(): Observable<VotingAllowed> {
+    return this.http.get<VotingAllowed>(this.API_URL + 'weebVotingAllowed', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
+  }
+
+  public getWeebAnswersForUser(): Observable<WeebAnswer[]> {
+    return this.http.get<WeebAnswer[]>(this.API_URL + 'weebAnswersForUser', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
+  }
+
+  public voteWeeb(obj: Object): Observable<any> {
+    return this.http.post(this.API_URL + 'voteWeeb', JSON.stringify(obj), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
+  }
+
+  public getAllWeebAnswers(): Observable<WeebAnswer[]> {
+    return this.http.get<WeebAnswer[]>(this.API_URL + 'allWeebAnswers', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+        'token': this.storage.retrieve('auth_token')
+      })
+    });
+  }
+
   public registerUser(obj: Object): Observable<any> {
     return this.http.post(this.API_URL + 'register', JSON.stringify(obj), this.httpOptions);
-  }
-
-  private addAuthToken(headers: HttpHeaders) {
-    headers.append('token', this.storage.retrieve('auth_token'));
-  }
-
-  private getMovieDBUrl(path: string): string {
-    return this.MOVIEDB_API_URL + path;
   }
 }

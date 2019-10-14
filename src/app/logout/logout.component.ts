@@ -14,7 +14,7 @@ export class LogoutComponent implements OnInit {
     this.titleService.setTitle('Logga ut' + environment.title);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.user.setUserLoggedOut();
     this.router.navigate(['overview/']);
   }

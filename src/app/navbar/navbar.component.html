@@ -12,6 +12,9 @@
                 <a [routerLink]="['/weebvote']" class="nav-link">Weeb-vote</a>
             </li>
             <li *ngIf="user.isLoggedIn()" class="nav-item" routerLinkActive="active">
+                <a [routerLink]="['/weebchoice']" class="nav-link">Lägg till weeb-alternativ</a>
+            </li>
+            <li *ngIf="user.isLoggedIn()" class="nav-item" routerLinkActive="active">
                 <a [routerLink]="['/settings']" class="nav-link">Inställningar</a>
             </li>
             <li *ngIf="user.isLoggedIn()" class="nav-item" routerLinkActive="active">

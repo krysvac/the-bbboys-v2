@@ -7,7 +7,7 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {LogoutComponent} from './logout/logout.component';
 import {AuthGuard} from './auth/auth.guard';
 import {RegisterComponent} from './register/register.component';
-import {WeebVoteComponent} from './weeb';
+import {WeebChoiceAddComponent, WeebVoteComponent} from './weeb';
 
 const routes: Routes = [
   {path: '', redirectTo: '/overview', pathMatch: 'full'},
@@ -16,6 +16,7 @@ const routes: Routes = [
   {path: 'overview', component: OverviewComponent},
   {path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   {path: 'weebvote', component: WeebVoteComponent, canActivate: [AuthGuard]},
+  {path: 'weebchoice', component: WeebChoiceAddComponent, canActivate: [AuthGuard]},
   {path: 'register/:token', component: RegisterComponent},
   {path: '**', component: PageNotFoundComponent}
 ];

@@ -20,7 +20,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
     return this.tokenExpiredEventEmitter;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     OverviewComponent.tokenExpiredEvent().subscribe(
         () => {
           this.tokenExpired = true;

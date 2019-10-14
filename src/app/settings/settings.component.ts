@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
       {mismatch: true};
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getRegisterLinks();
   }
 
@@ -155,7 +155,7 @@ export class SettingsComponent implements OnInit {
     };
   }
 
-  private showSnackbar(message: string) {
+  private showSnackbar(message: string): void {
     this.snackbarMessage = message;
     const x: HTMLElement = document.getElementById('snackbar');
     x.className = 'show';

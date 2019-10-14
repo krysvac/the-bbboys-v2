@@ -1,11 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
+import {FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
 import {FormGroup} from '@angular/forms';
-import {FormlyFieldConfig} from '@ngx-formly/core';
-import {SearchModel, SearchModelType, SearchResponse, SearchResultMovie, SearchResultTv} from '../../types';
-import {Title} from '@angular/platform-browser';
+import {ApiService, UserService} from '../../_services';
 import {environment} from '../../../environments/environment';
-import {ApiService} from '../../_services';
-import * as moment from 'moment';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-weeb-vote',
@@ -13,86 +11,107 @@ import * as moment from 'moment';
   styleUrls: ['./weeb-vote.component.scss']
 })
 export class WeebVoteComponent implements OnInit {
-  public addChoiceForm: FormGroup = new FormGroup({});
+  public weebVoteForm: FormGroup = new FormGroup({});
   public model: Object = {};
-  public searchedModel: SearchModel;
   public fields: FormlyFieldConfig[] = [
     {
-      key: 'searchType',
-      type: 'select',
-      defaultValue: 'movie',
+      key: 'choices',
+      type: 'multicheckbox',
       templateOptions: {
-        label: 'Välj söktyp',
+        label: 'Vad ska vi se?',
         required: true,
-        options: [
-          {value: 'movie', label: 'Film'},
-          {value: 'tvShow', label: 'Serie'}
-        ]
-      }
-    },
-    {
-      key: 'searchTerm',
-      type: 'input',
-      templateOptions: {
-        label: 'Sökterm',
-        placeholder: 'Zombie Land Saga',
-        description: 'Alla tecken är tillåtna, max 50 tecken',
-        required: true,
-        pattern: /^.{1,50}$/
+        options: []
       },
-      validation: {
-        messages: {
-          required: (error, field: FormlyFieldConfig) => 'Du måste ha en sökterm!',
-          pattern: (error, field: FormlyFieldConfig) => `"${field.formControl.value}" is not a valid IP Address`
-        }
-      }
+      expressionProperties: {
+        // apply expressionProperty for disabled based on formState
+        'templateOptions.disabled': 'formState.disabled'
+      },
     }
   ];
-  public searchResultsMovies: SearchResponse<SearchResultMovie> = undefined;
-  public searchResultsTv: SearchResponse<SearchResultTv> = undefined;
-  public isSearching: boolean = false;
-  public imageBaseUrl: string;
-  public SearchModelType: any = SearchModelType;
+  public options: FormlyFormOptions = {
+    formState: {
+      disabled: true
+    }
+  };
+  private static userVotedWeebEvent: EventEmitter<any> = new EventEmitter<any>();
+  public loading: boolean = true;
+  public votingAllowed: boolean = true;
+  public snackbarMessage: string = '';
+  public hasChoices: boolean = false;
 
-  constructor(private titleService: Title, private api: ApiService) {
+  constructor(public user: UserService, private api: ApiService, private titleService: Title) {
     this.titleService.setTitle('Weeb-vote' + environment.title);
   }
 
   ngOnInit(): void {
-    this.api.getMovieDBImageBaseUrl().subscribe((data) => {
-      this.imageBaseUrl = data['images']['secure_base_url'];
+    this.api.getWeebChoices().subscribe((choices) => {
+      const values: any[] = [];
+      this.model['choices'] = {};
+      for (const choice of choices) {
+        values.push({key: choice.value, value: choice.name});
+      }
+      this.hasChoices = values.length > 0;
+      this.fields[0].templateOptions.options = values;
+
+      this.api.getWeebAnswersForUser().subscribe((answers) => {
+        for (const answer of answers) {
+          this.model['choices'][answer.value] = true;
+        }
+
+        this.api.getWeebVotingAllowed().subscribe((res) => {
+          this.votingAllowed = res.votingAllowed;
+          this.options.formState.disabled = !this.votingAllowed;
+          this.loading = false;
+        });
+      });
     });
   }
 
-  public onSubmit(model: Object) {
-    this.searchedModel = Object.assign({}, model as SearchModel);
-    this.isSearching = true;
-    if (this.searchedModel.searchType === SearchModelType.Movie) {
-      this.api.searchForMovie(this.searchedModel.searchTerm).subscribe((data) => {
-        console.log(data);
-        this.searchResultsMovies = data;
-        this.isSearching = false;
-      });
-    } else if (this.searchedModel.searchType === SearchModelType.TVShow) {
-      this.api.searchForTvShow(this.searchedModel.searchTerm).subscribe((data) => {
-        console.log(data);
-        this.searchResultsTv = data;
-        this.isSearching = false;
-      });
-    }
+  public static getUserVotedWeebEventEmitter(): EventEmitter<any> {
+    return this.userVotedWeebEvent;
   }
 
-  public getYear(date: string): string {
-    const parsedDate: moment.Moment = moment(date);
+  public onSubmit(model: Object): void {
+    const values: string[] = [];
 
-    if (parsedDate.isValid()) {
-      return parsedDate.year().toString();
+    for (const key of Object.keys(model['choices'])) {
+      if (model['choices'][key] === true) {
+        values.push(key);
+      }
+    }
+
+    const details: Object = <Object>{
+      choices: values
+    };
+
+    this.api.voteWeeb(details).subscribe(() => {
+      WeebVoteComponent.userVotedWeebEvent.emit(true);
+      this.showSnackbar('Rösterna sparades');
+    });
+  }
+
+  public submitDisabled(): boolean {
+    const keys: string[] = Object.keys(this.model['choices']);
+
+    if (keys.length > 0) {
+      for (const key of keys) {
+        if (this.model['choices'][key] === true) {
+          return false;
+        }
+      }
     } else {
-      return 'N/A';
+      return true;
     }
+
+    return true;
   }
 
-  public addItem(id: number): void {
-    console.log(id);
+  private showSnackbar(message: string): void {
+    this.snackbarMessage = message;
+    const x: HTMLElement = document.getElementById('snackbar');
+    x.className = 'show';
+    setTimeout(function() {
+      x.className = x.className.replace('show', '');
+    }, 3000);
   }
 }

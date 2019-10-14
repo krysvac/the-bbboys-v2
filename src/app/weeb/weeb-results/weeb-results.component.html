@@ -1,0 +1,28 @@
+<h2>Resultat</h2>
+<ng-container *ngIf="!loading">
+    <div>
+        <ng-container *ngIf="choices && choices.length > 0">
+            <div *ngFor="let choice of choices">
+                <div class="text-left">{{choice.name}} ({{answers[choice.value].percent | number: '1.0-2'}}%)</div>
+                <ngb-progressbar [max]="totalAnswerAmount"
+                                 [value]="answers[choice.value].amount"
+                                 class="answerprogress"
+                                 type="primary"></ngb-progressbar>
+                <br>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="(choices && choices.length === 0) || !choices">
+            <div class="text-center" style="font-size: 26px">Inga alternativ tillagda...</div>
+        </ng-container>
+    </div>
+</ng-container>
+<ng-container *ngIf="loading">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary loading-spinner">
+        </div>
+    </div>
+    <div class="d-flex justify-content-center loading-spinner-info">
+        Laddar resultat...
+    </div>
+</ng-container>
+
