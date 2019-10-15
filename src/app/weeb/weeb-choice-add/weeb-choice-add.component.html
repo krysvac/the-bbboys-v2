@@ -42,8 +42,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h2 class="movie-title">
-                                            {{result.title}} <span class="year">({{getYear(result.release_date)}}
-                                            )</span>
+                                            {{result.title}} <span class="year">({{getYear(result.release_date)}})</span>
                                         </h2>
                                     </div>
                                 </div>
@@ -52,10 +51,12 @@
                                         {{result.overview}}
                                     </div>
                                 </div>
-                                <div class="add-button">
-                                    <button class="btn btn-primary" [disabled]="alreadyAdded(result.id)" (click)="addChoice(result.id, result.title, getYear(result.release_date))">
-                                        {{ alreadyAdded(result.id) ? 'Redan tillagd' : 'Lägg till' }}
-                                    </button>
+                                <div class="row mt-4 d-block">
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" [disabled]="alreadyAdded(result.id)" (click)="addChoice(result.id, result.title, getYear(result.release_date))">
+                                            {{ alreadyAdded(result.id) ? 'Redan tillagd' : 'Lägg till' }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -83,8 +84,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <h2 class="movie-title">
-                                            {{result.name}} <span class="year">({{getYear(result.first_air_date)}}
-                                            )</span>
+                                            {{result.name}} <span class="year">({{getYear(result.first_air_date)}})</span>
                                         </h2>
                                     </div>
                                 </div>
@@ -93,10 +93,12 @@
                                         {{result.overview}}
                                     </div>
                                 </div>
-                                <div class="add-button">
-                                    <button class="btn btn-primary" [disabled]="alreadyAdded(result.id)" (click)="addChoice(result.id, result.name, getYear(result.first_air_date))">
-                                        {{ alreadyAdded(result.id) ? 'Redan tillagd' : 'Lägg till' }}
-                                    </button>
+                                <div class="row mt-4 d-block">
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" [disabled]="alreadyAdded(result.id)" (click)="addChoice(result.id, result.name, getYear(result.first_air_date))">
+                                            {{ alreadyAdded(result.id) ? 'Redan tillagd' : 'Lägg till' }}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
