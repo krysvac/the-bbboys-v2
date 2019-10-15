@@ -3,9 +3,12 @@
     <hr>
     <h2 style="margin-top: 30px;">Sök</h2>
     <form (ngSubmit)="onSubmit(model)" [formGroup]="addChoiceForm">
-        <formly-form [form]="addChoiceForm" [fields]="fields" [model]="model"></formly-form>
-        <button type="submit" class="btn btn-primary" [disabled]="!addChoiceForm.valid">Sök</button>
+        <formly-form [form]="addChoiceForm" [fields]="fields" [model]="model" [options]="options"></formly-form>
+        <button type="submit" class="btn btn-primary" [disabled]="!addChoiceForm.valid || !votingAllowed">Sök</button>
     </form>
+    <h4 [ngClass]="{'text-success': votingAllowed, 'text-danger': !votingAllowed}">
+        Röstningen är {{votingAllowed ? 'öppen tills fredag 23:59:59!' : 'stängd för veckan!'}}
+    </h4>
     <div *ngIf="isSearching" class="d-flex justify-content-center">
         <div class="spinner-border text-primary loading-spinner">
         </div>
@@ -25,17 +28,17 @@
                 <div class="col-12">
                     <div class="search-item-movie" *ngFor="let result of searchResultsMovies.results">
                         <div class="row">
-                            <div class="col-2" *ngIf="result.poster_path">
+                            <div class="col-xl-2 col-lg-12" *ngIf="result.poster_path">
                                 <a href="https://www.themoviedb.org/movie/{{result.id}}" target="_blank">
                                     <img class="movie-poster"
                                          [src]="imageBaseUrl + 'original' + result.poster_path"
                                          [alt]="result.title">
                                 </a>
                             </div>
-                            <div class="col-2 no-image" *ngIf="!result.poster_path">
+                            <div class="col-xl-2 col-lg-12 no-image text-center" *ngIf="!result.poster_path">
                                 Ingen bild tillgänglig
                             </div>
-                            <div class="col-10">
+                            <div class="col-xl-10 col-lg-12">
                                 <div class="row">
                                     <div class="col-12">
                                         <h2 class="movie-title">
@@ -66,17 +69,17 @@
                 <div class="col-12">
                     <div class="search-item-movie" *ngFor="let result of searchResultsTv.results">
                         <div class="row">
-                            <div class="col-2" *ngIf="result.poster_path">
+                            <div class="col-xl-2 col-lg-12" *ngIf="result.poster_path">
                                 <a href="https://www.themoviedb.org/movie/{{result.id}}" target="_blank">
                                     <img class="movie-poster"
                                          [src]="imageBaseUrl + 'original' + result.poster_path"
                                          [alt]="result.name">
                                 </a>
                             </div>
-                            <div class="col-2 no-image" *ngIf="!result.poster_path">
+                            <div class="col-xl-2 col-lg-12 no-image text-center" *ngIf="!result.poster_path">
                                 Ingen bild tillgänglig
                             </div>
-                            <div class="col-10">
+                            <div class="col-xl-10 col-lg-12">
                                 <div class="row">
                                     <div class="col-12">
                                         <h2 class="movie-title">

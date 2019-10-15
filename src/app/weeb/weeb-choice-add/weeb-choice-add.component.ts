@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {FormlyFieldConfig} from '@ngx-formly/core';
+import {FormlyFieldConfig, FormlyFormOptions} from '@ngx-formly/core';
 import {SearchModel, SearchModelType, SearchResponse, SearchResultMovie, SearchResultTv} from '../../types';
 import {Title} from '@angular/platform-browser';
 import {environment} from '../../../environments/environment';
@@ -28,6 +28,9 @@ export class WeebChoiceAddComponent implements OnInit {
           {value: 'movie', label: 'Film'},
           {value: 'tvShow', label: 'Serie'}
         ]
+      },
+      expressionProperties: {
+        'templateOptions.disabled': 'formState.disabled'
       }
     },
     {
@@ -43,11 +46,19 @@ export class WeebChoiceAddComponent implements OnInit {
       validation: {
         messages: {
           required: (error, field: FormlyFieldConfig): string => 'Du måste ha en sökterm!',
-          pattern: (error, field: FormlyFieldConfig): string => `"${field.formControl.value}" is not a valid IP Address`
+          pattern: (error, field: FormlyFieldConfig): string => `"${field.formControl.value}" är inte en giltig sökterm`
         }
+      },
+      expressionProperties: {
+        'templateOptions.disabled': 'formState.disabled'
       }
     }
   ];
+  public options: FormlyFormOptions = {
+    formState: {
+      disabled: true
+    }
+  };
   public searchResultsMovies: SearchResponse<SearchResultMovie> = undefined;
   public searchResultsTv: SearchResponse<SearchResultTv> = undefined;
   public isSearching: boolean = false;
@@ -55,14 +66,20 @@ export class WeebChoiceAddComponent implements OnInit {
   public SearchModelType: any = SearchModelType;
   public snackbarMessage: string = '';
   private alreadyAddedChoices: string[] = [];
+  public votingAllowed: boolean = true;
 
   constructor(private titleService: Title, private api: ApiService) {
     this.titleService.setTitle('Lägg till weeb-alternativ' + environment.title);
   }
 
   ngOnInit(): void {
-    this.api.getMovieDBImageBaseUrl().subscribe((data) => {
-      this.imageBaseUrl = data['images']['secure_base_url'];
+    this.api.getWeebVotingAllowed().subscribe((res) => {
+      this.votingAllowed = res.votingAllowed;
+      this.options.formState.disabled = !this.votingAllowed;
+
+      this.api.getMovieDBImageBaseUrl().subscribe((data) => {
+        this.imageBaseUrl = data['images']['secure_base_url'];
+      });
     });
   }
 

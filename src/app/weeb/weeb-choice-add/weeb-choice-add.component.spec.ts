@@ -10,7 +10,7 @@ describe('WeebChoiceAddComponent', () => {
     TestBed.configureTestingModule({
       declarations: [WeebChoiceAddComponent]
     })
-      .compileComponents();
+        .compileComponents();
   }));
 
   beforeEach(() => {

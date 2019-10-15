@@ -8,11 +8,10 @@
     margin: 40px 0;
 
     .movie-poster {
-        min-width: 138px;
-        min-height: 203px;
-        max-width: 138px;
-        max-height: 203px;
+        width: 138px;
+        height: 203px;
         margin: 10px;
+        margin-left: 0!important;
     }
 
     .movie-title {
@@ -36,7 +35,7 @@
 
     .no-image {
         font-size: 14px;
-        padding-top: 5px;
+        padding-top: 7px;
         padding-left: 25px;
         padding-right: 25px;
     }
@@ -45,5 +44,12 @@
         position: absolute;
         bottom: 0;
         right: 15px;
+    }
+}
+
+@media (max-width: 1500px) and (min-width: 1200px) {
+    .movie-poster {
+        width: 100px !important;
+        height: auto!important;
     }
 }

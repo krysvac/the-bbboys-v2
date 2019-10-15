@@ -23,9 +23,8 @@ export class WeebVoteComponent implements OnInit {
         options: []
       },
       expressionProperties: {
-        // apply expressionProperty for disabled based on formState
         'templateOptions.disabled': 'formState.disabled'
-      },
+      }
     }
   ];
   public options: FormlyFormOptions = {
