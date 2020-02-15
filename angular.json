@@ -112,5 +112,8 @@
             }
         }
     },
-    "defaultProject": "the-bbboys-v2"
+    "defaultProject": "the-bbboys-v2",
+    "cli": {
+        "analytics": "13497d60-c2ed-4b30-a586-46fe87a6d1e1"
+    }
 }

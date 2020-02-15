@@ -43,27 +43,7 @@ export class WeebVoteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.getWeebChoices().subscribe((choices) => {
-      const values: any[] = [];
-      this.model['choices'] = {};
-      for (const choice of choices) {
-        values.push({key: choice.value, value: choice.name});
-      }
-      this.hasChoices = values.length > 0;
-      this.fields[0].templateOptions.options = values;
-
-      this.api.getWeebAnswersForUser().subscribe((answers) => {
-        for (const answer of answers) {
-          this.model['choices'][answer.value] = true;
-        }
-
-        this.api.getWeebVotingAllowed().subscribe((res) => {
-          this.votingAllowed = res.votingAllowed;
-          this.options.formState.disabled = !this.votingAllowed;
-          this.loading = false;
-        });
-      });
-    });
+    this.init();
   }
 
   public static getUserVotedWeebEventEmitter(): EventEmitter<any> {
@@ -85,6 +65,7 @@ export class WeebVoteComponent implements OnInit {
 
     this.api.voteWeeb(details).subscribe(() => {
       WeebVoteComponent.userVotedWeebEvent.emit(true);
+      this.init();
       this.showSnackbar('Rösterna sparades');
     });
   }
@@ -112,5 +93,29 @@ export class WeebVoteComponent implements OnInit {
     setTimeout(function() {
       x.className = x.className.replace('show', '');
     }, 3000);
+  }
+
+  private init(): void {
+    this.api.getWeebChoices().subscribe((choices) => {
+      const values: any[] = [];
+      this.model['choices'] = {};
+      for (const choice of choices) {
+        values.push({value: choice.value, label: choice.name});
+      }
+      this.hasChoices = values.length > 0;
+      this.fields[0].templateOptions.options = values;
+
+      this.api.getWeebAnswersForUser().subscribe((answers) => {
+        for (const answer of answers) {
+          this.model['choices'][answer.value] = true;
+        }
+
+        this.api.getWeebVotingAllowed().subscribe((res) => {
+          this.votingAllowed = res.votingAllowed;
+          this.options.formState.disabled = !this.votingAllowed;
+          this.loading = false;
+        });
+      });
+    });
   }
 }

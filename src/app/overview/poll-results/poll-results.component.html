@@ -1,6 +1,6 @@
 <h3 *ngIf="choicesLoaded && answersLoaded">{{totalAmountOfAnswers}} Svar</h3>
 
-<div *ngIf="choicesLoaded && answersLoaded && answers !== {}">
+<div *ngIf="choicesLoaded && answersLoaded && answers && answers.length && answers.length > 0">
     <div *ngFor="let choice of choices">
         <div class="text-left">{{choice.value}} ({{answers[choice.id].percent | number: '1.0-2'}}%)</div>
         <ngb-progressbar [max]="totalAmountOfAnswers" [value]="answers[choice.id].amount" class="answerprogress"
@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<div *ngIf="choicesLoaded && answersLoaded && answers === {}">
+<div *ngIf="choicesLoaded && answersLoaded && answers && answers.length && answers.length === 0">
     <div *ngFor="let choice of choices">
         <div class="text-left">{{choice.value}} (0 %)</div>
         <ngb-progressbar [max]="0" [value]="0" class="answerprogress" type="primary"></ngb-progressbar>

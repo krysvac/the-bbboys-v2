@@ -22,7 +22,6 @@ import {RegisterComponent} from './register/register.component';
 import {WeebChoiceAddComponent, WeebVoteComponent} from './weeb';
 import {FormlyModule} from '@ngx-formly/core';
 import {FormlyBootstrapModule} from '@ngx-formly/bootstrap';
-import {NgxDatatableModule} from '@swimlane/ngx-datatable';
 import {WeebResultsComponent} from './weeb/weeb-results/weeb-results.component';
 
 @NgModule({
@@ -51,8 +50,7 @@ import {WeebResultsComponent} from './weeb/weeb-results/weeb-results.component';
     FormsModule,
     ReactiveFormsModule,
     FormlyModule.forRoot(),
-    FormlyBootstrapModule,
-    NgxDatatableModule
+    FormlyBootstrapModule
   ],
   providers: [UserService, StorageService, ApiService],
   bootstrap: [AppComponent]
