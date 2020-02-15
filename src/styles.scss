@@ -1,39 +1,21 @@
-.minecraft {
-    background-image: url("assets/images/bg.jpg");
+.background-image {
+    background-image: url("assets/images/background.jpg");
     background-size: contain;
     background-repeat-x: no-repeat;
     background-repeat-y: repeat;
 }
 
-.hotice {
+.top-image {
     background-color: #cccccc;
-    background-image: url("assets/images/hotice.jpg");
+    background-image: url("assets/images/top.jpg");
+    height: 350px;
+    margin-top: -100px;
+}
+
+.bottom-image {
+    background-color: #cccccc;
+    background-image: url("assets/images/bottom.jpg");
     height: 250px;
-}
-
-.council {
-    background-color: #cccccc;
-    background-image: url("assets/images/council.jpg");
-    height: 250px;
-}
-
-.bg-spook {
-    background-image: url("assets/images/bg_spook.jpg");
-    background-size: contain;
-    background-repeat-x: no-repeat;
-    background-repeat-y: repeat;
-}
-
-.top-spook {
-    background-color: #cccccc;
-    background-image: url("assets/images/top_spook.jpeg");
-    height: 168px;
-}
-
-.bottom-spook {
-    background-color: #cccccc;
-    background-image: url("assets/images/bottom_spook.jpeg");
-    height: 196px;
 }
 
 .main {

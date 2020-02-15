@@ -43,7 +43,7 @@ export class FoodInfoComponent implements OnInit {
   }
 
   public foodItemIsForToday(key: string): boolean {
-    return key.toString() === (moment().isoWeekday() - 2).toString();
+    return key.toString() === moment().isoWeekday().toString();
   }
 
   public translateDay(day: string): string {
