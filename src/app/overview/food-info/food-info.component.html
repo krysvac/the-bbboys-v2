@@ -20,24 +20,27 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let item of villa | keyvalue ; index as index"
-                    [ngClass]="{'activeDay': foodItemIsForToday(item.key)}">
+                    [ngClass]="{'activeDay': foodItemIsForToday(item.key.toString())}">
                     <td class="cursor-point">
-                        <a (click)="toggleOpen('#villa' + item.key)" [attr.aria-controls]="'#villa' + item.key"
-                           [attr.aria-expanded]="shouldBeOpen('#villa', item.key)"
-                           [ngClass]="{'collapsed': !shouldBeOpen('#villa', item.key)}"
-                           class="dropdown-toggle" data-toggle="collapse" role="button"
+                        <a (click)="toggleOpen('#villa' + item.key)"
+                           [attr.aria-controls]="'#villa' + item.key"
+                           [attr.aria-expanded]="shouldBeOpen('#villa', item.key.toString())"
+                           [ngClass]="{'collapsed': !shouldBeOpen('#villa', item.key.toString())}"
+                           class="dropdown-toggle"
+                           data-toggle="collapse"
+                           role="button"
                            tabIndex="{{index}}">
-                            {{translateDay(item.key)}}
+                            {{translateDay(item.key.toString())}}
                         </a>
                     </td>
                     <td>
-                        <div [ngbCollapse]="!shouldBeOpen('#villa', item.key)" id="{{'#villa' + item.key}}">
+                        <div [ngbCollapse]="!shouldBeOpen('#villa', item.key.toString())" id="{{'#villa' + item.key}}">
                             <div>
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                     </thead>
                                     <tbody>
-                                    <tr *ngFor="let food of item.value">
+                                    <tr *ngFor="let food of unknownToStringArr(item.value)">
                                         <td>
                                             {{food}}
                                         </td>
@@ -63,17 +66,21 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let item of bistroJ | keyvalue ; index as index"
-                    [ngClass]="{'activeDay': foodItemIsForToday(item.key)}">
+                    [ngClass]="{'activeDay': foodItemIsForToday(item.key.toString())}">
                     <td class="cursor-point">
-                        <a (click)="toggleOpen('#bistroJ' + item.key)" [attr.aria-controls]="'#bistroJ' + item.key"
-                           [attr.aria-expanded]="shouldBeOpen('#villa', item.key)"
-                           class="dropdown-toggle" role="button"
+                        <a (click)="toggleOpen('#bistroJ' + item.key)"
+                           [attr.aria-controls]="'#bistroJ' + item.key"
+                           [attr.aria-expanded]="shouldBeOpen('#bistroJ', item.key.toString())"
+                           [ngClass]="{'collapsed': !shouldBeOpen('#bistroJ', item.key.toString())}"
+                           class="dropdown-toggle"
+                           data-toggle="collapse"
+                           role="button"
                            tabIndex="{{index}}">
-                            {{translateDay(item.key)}}
+                            {{translateDay(item.key.toString())}}
                         </a>
                     </td>
                     <td>
-                        <div [ngbCollapse]="!shouldBeOpen('#bistroJ', item.key)" id="{{'#bistroJ' + item.key}}">
+                        <div [ngbCollapse]="!shouldBeOpen('#bistroJ', item.key.toString())" id="{{'#bistroJ' + item.key}}">
                             <div>
                                 <table class="table table-hover table-bordered">
                                     <thead>

@@ -80,4 +80,8 @@ export class FoodInfoComponent implements OnInit {
       return false;
     }
   }
+
+  public unknownToStringArr(value: unknown): string[] {
+    return value as string[];
+  }
 }
